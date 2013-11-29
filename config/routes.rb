@@ -1,4 +1,6 @@
 WebApp::Application.routes.draw do
+  resources :addresses
+
   get "users/index"
   get "home/index"
   devise_for :users
