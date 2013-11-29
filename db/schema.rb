@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131129082721) do
+ActiveRecord::Schema.define(version: 20131129090422) do
+
+  create_table "cities", force: true do |t|
+    t.string   "name"
+    t.integer  "province_state_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "countries", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "extensions", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "province_states", force: true do |t|
+    t.string   "name"
+    t.integer  "country_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
