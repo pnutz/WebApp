@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201010507) do
+ActiveRecord::Schema.define(version: 20131201011933) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -84,6 +84,32 @@ ActiveRecord::Schema.define(version: 20131201010507) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "receipt_details", force: true do |t|
+    t.integer  "receipt_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "receipt_details", ["receipt_id"], name: "index_receipt_details_on_receipt_id"
+
+  create_table "receipts", force: true do |t|
+    t.decimal  "total"
+    t.string   "transaction_number"
+    t.integer  "purchase_type_id"
+    t.string   "title"
+    t.integer  "folder_id"
+    t.text     "note"
+    t.integer  "vendor_id"
+    t.integer  "currency_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "receipts", ["currency_id"], name: "index_receipts_on_currency_id"
+  add_index "receipts", ["folder_id"], name: "index_receipts_on_folder_id"
+  add_index "receipts", ["purchase_type_id"], name: "index_receipts_on_purchase_type_id"
+  add_index "receipts", ["vendor_id"], name: "index_receipts_on_vendor_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
