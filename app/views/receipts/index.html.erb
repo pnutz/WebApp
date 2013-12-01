@@ -1,0 +1,41 @@
+<h1>Listing receipts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Total</th>
+      <th>Transaction number</th>
+      <th>Purchase type</th>
+      <th>Title</th>
+      <th>Folder</th>
+      <th>Note</th>
+      <th>Vendor</th>
+      <th>Currency</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receipts.each do |receipt| %>
+      <tr>
+        <td><%= receipt.total %></td>
+        <td><%= receipt.transaction_number %></td>
+        <td><%= receipt.purchase_type %></td>
+        <td><%= receipt.title %></td>
+        <td><%= receipt.folder %></td>
+        <td><%= receipt.note %></td>
+        <td><%= receipt.vendor %></td>
+        <td><%= receipt.currency %></td>
+        <td><%= link_to 'Show', receipt %></td>
+        <td><%= link_to 'Edit', edit_receipt_path(receipt) %></td>
+        <td><%= link_to 'Destroy', receipt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Receipt', new_receipt_path %>

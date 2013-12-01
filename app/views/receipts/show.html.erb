@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @receipt.total %>
+</p>
+
+<p>
+  <strong>Transaction number:</strong>
+  <%= @receipt.transaction_number %>
+</p>
+
+<p>
+  <strong>Purchase type:</strong>
+  <%= @receipt.purchase_type %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @receipt.title %>
+</p>
+
+<p>
+  <strong>Folder:</strong>
+  <%= @receipt.folder %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @receipt.note %>
+</p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @receipt.vendor %>
+</p>
+
+<p>
+  <strong>Currency:</strong>
+  <%= @receipt.currency %>
+</p>
+
+<%= link_to 'Edit', edit_receipt_path(@receipt) %> |
+<%= link_to 'Back', receipts_path %>

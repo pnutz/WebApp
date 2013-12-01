@@ -1,4 +1,8 @@
 WebApp::Application.routes.draw do
+  resources :receipts
+
+  resources :folders
+
   resources :addresses
 
   get "users/index"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131129093606) do
+ActiveRecord::Schema.define(version: 20131201010507) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -34,8 +34,40 @@ ActiveRecord::Schema.define(version: 20131129093606) do
     t.datetime "updated_at"
   end
 
+  create_table "currencies", force: true do |t|
+    t.string   "type",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "extensions", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "folder_types", force: true do |t|
+    t.string   "type",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "folders", force: true do |t|
+    t.string   "name",           null: false
+    t.text     "description"
+    t.integer  "user_id",        null: false
+    t.integer  "folder_type_id", null: false
+    t.integer  "folder_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "folders", ["folder_id"], name: "index_folders_on_folder_id"
+  add_index "folders", ["folder_type_id"], name: "index_folders_on_folder_type_id"
+  add_index "folders", ["user_id"], name: "index_folders_on_user_id"
+
+  create_table "item_types", force: true do |t|
+    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -43,6 +75,12 @@ ActiveRecord::Schema.define(version: 20131129093606) do
   create_table "province_states", force: true do |t|
     t.string   "name"
     t.integer  "country_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "purchase_types", force: true do |t|
+    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -64,5 +102,11 @@ ActiveRecord::Schema.define(version: 20131129093606) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "vendors", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
