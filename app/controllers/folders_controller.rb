@@ -14,7 +14,7 @@ class FoldersController < ApplicationController
 
   # GET /folders/new
   def new
-    @folder = Folder.new
+    @folder = Folder.new()
   end
 
   # GET /folders/1/edit
@@ -25,6 +25,7 @@ class FoldersController < ApplicationController
   # POST /folders.json
   def create
     @folder = Folder.new(folder_params)
+	@folder.user_id = current_user.id
 
     respond_to do |format|
       if @folder.save
