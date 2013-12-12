@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
     def index
-        @userList = User.all
+        @users = User.all
     end
 end
