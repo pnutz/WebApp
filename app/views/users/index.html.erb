@@ -1,8 +1,17 @@
 <h1>Users Index Page</h1>
 <p>Find me in app/views/users/index.html.erb</p>
 <h3> Current User Emails in Database </h3>
-<ul>
+
+<table>
+    <tr>
+       <th>Name</th>
+       <th>Created At</th>
+    </tr>
+
     <% @users.each do |user| %>
-        <li><%= user.email %> </li>
+    <tr>
+        <td><%= user.email %></td>
+        <td><%= user.created_at %></td>
+    </tr>
     <% end %>
-</ul>
+</table>
