@@ -12,7 +12,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @folder.user %>
+  <%= @folder.user.email %>
 </p>
 
 <p>
@@ -22,7 +22,24 @@
 
 <p>
   <strong>Folder:</strong>
-  <%= @folder.folder %>
+  <% if (@folder.folder != nil) %>
+    <%= @folder.folder.name %>
+  <% else %>
+    <%= "N/A" %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Receipts:</strong>
+  <% if (@receipts != nil) %>
+  <br />
+    <% @receipts.each do |receipt| %>
+      <%= link_to receipt.title, receipt %>
+      <br />
+    <% end %>
+  <% else %>
+    <%= "N/A" %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_folder_path(@folder) %> |
