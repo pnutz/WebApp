@@ -4,12 +4,18 @@ class FoldersController < ApplicationController
   # GET /folders
   # GET /folders.json
   def index
-    @folders = Folder.all
+    @folders = Folder.find(:all, :conditions=>["user_id = ?", current_user.id])
   end
 
   # GET /folders/1
   # GET /folders/1.json
   def show
+    tempReceipt = Receipt.find(:all, :conditions=>["folder_id = ?", params[:id]])
+    if (tempReceipt.count != 0)
+      @receipts = tempReceipt
+    else
+      @receipts = nil 
+    end
   end
 
   # GET /folders/new

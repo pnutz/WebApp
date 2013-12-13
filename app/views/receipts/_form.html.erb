@@ -29,7 +29,7 @@
   </div>
   <div class="field">
     <%= f.label :folder_id %><br>
-    <%= f.text_field :folder_id %>
+    <%= f.collection_select :folder_id, Folder.find(:all, :conditions=>["user_id = ?", current_user.id]), :folder_id, :name, :include_blank => true %>
   </div>
   <div class="field">
     <%= f.label :note %><br>
