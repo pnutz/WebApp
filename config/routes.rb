@@ -1,4 +1,6 @@
 WebApp::Application.routes.draw do
+  resources :receipt_items
+
   resources :receipts
 
   resources :folders

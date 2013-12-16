@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131216020543) do
+ActiveRecord::Schema.define(version: 20131216041111) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -96,6 +96,19 @@ ActiveRecord::Schema.define(version: 20131216020543) do
   add_index "receipt_details", ["billing_address_id"], name: "index_receipt_details_on_billing_address_id"
   add_index "receipt_details", ["receipt_id"], name: "index_receipt_details_on_receipt_id"
   add_index "receipt_details", ["shipping_address_id"], name: "index_receipt_details_on_shipping_address_id"
+
+  create_table "receipt_items", force: true do |t|
+    t.integer  "receipt_id"
+    t.integer  "item_type_id"
+    t.decimal  "cost",         precision: 19, scale: 4
+    t.integer  "quantity"
+    t.boolean  "is_credit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "receipt_items", ["item_type_id"], name: "index_receipt_items_on_item_type_id"
+  add_index "receipt_items", ["receipt_id"], name: "index_receipt_items_on_receipt_id"
 
   create_table "receipts", force: true do |t|
     t.decimal  "total"
