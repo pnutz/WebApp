@@ -1,5 +1,15 @@
 WebApp::Application.routes.draw do
+
   resources :receipt_items
+
+
+  namespace :api do
+    namespace :v1  do
+#          resources :tokens,:only => [:create, :destroy]
+          match "tokens" => 'tokens#create', :via => :post
+          match "tokens" => 'tokens#destroy', :via => :delete
+    end
+  end
 
   resources :receipts
 
