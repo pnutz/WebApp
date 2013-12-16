@@ -30,10 +30,23 @@
 </p>
 
 <p>
-  <strong>Receipts:</strong>
-  <% if (@receipts != nil) %>
+  <strong>Sub-Folders:</strong>
+  <% if (@folder.folders.size != 0) %>
   <br />
-    <% @receipts.each do |receipt| %>
+    <% @folder.folders.each do |folder| %>
+      <%= link_to folder.name, folder %>
+      <br />
+    <% end %>
+  <% else %>
+    <%= "N/A" %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Receipts:</strong>
+  <% if (@folder.receipts.size != 0) %>
+  <br />
+    <% @folder.receipts.each do |receipt| %>
       <%= link_to receipt.title, receipt %>
       <br />
     <% end %>

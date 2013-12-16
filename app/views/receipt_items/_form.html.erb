@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :receipt_id %><br>
-    <%= f.text_field :receipt_id %>
+    <%= f.collection_select :receipt_id, current_user.receipts, :id, :title, :include_blank => true %>
   </div>
   <div class="field">
     <%= f.label :item_type_id %><br>
-    <%= f.text_field :item_type_id %>
+    <%= f.collection_select :item_type_id, ItemType.all, :id, :name, :include_blank => true %>
   </div>
   <div class="field">
     <%= f.label :cost %><br>

@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20131216041111) do
   end
 
   create_table "currencies", force: true do |t|
-    t.string   "type",       null: false
+    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20131216041111) do
   end
 
   create_table "folder_types", force: true do |t|
-    t.string   "type",       null: false
+    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

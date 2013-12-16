@@ -3,4 +3,6 @@ class Receipt < ActiveRecord::Base
   belongs_to :folder
   belongs_to :vendor
   belongs_to :currency
+
+  has_many :receipt_items
 end
