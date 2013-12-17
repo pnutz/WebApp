@@ -1,5 +1,6 @@
 class Api::V1::TokensController  < ApplicationController
-  skip_before_filter :verify_authenticity_token
+  #Don't have to authenticate user when accessing tokencontroller
+  skip_before_filter :verify_authenticity_token, :authenticate_user!
   respond_to :json
   #Page for how to use this module
   #http://matteomelani.wordpress.com/2011/10/17/authentication-for-mobile-devices/
