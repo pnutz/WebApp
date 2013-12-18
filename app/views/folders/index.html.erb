@@ -20,7 +20,7 @@
         <td><%= folder.name %></td>
         <td><%= folder.description %></td>
         <td><%= folder.user.email %></td>
-        <td><%= folder.folder_type %></td>
+        <td><%= folder.folder_type.name %></td>
         <td>
           <% if (folder.folder != nil) %>
             <%= folder.folder.name %>
