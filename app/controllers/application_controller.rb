@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
     user_email = params[:email].presence
     user = user_email && User.find_by_email(user_email)
     if user && Devise.secure_compare(user.authentication_token, params[:token])
-      sign_in user, store: false
+      sign_in user
+      #sign_in user, store: false
     end
   end
 end
