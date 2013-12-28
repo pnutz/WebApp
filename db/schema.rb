@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131216041111) do
+ActiveRecord::Schema.define(version: 20131228224841) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 20131216041111) do
     t.integer  "currency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "date"
   end
 
   add_index "receipts", ["currency_id"], name: "index_receipts_on_currency_id"
