@@ -15,6 +15,7 @@ class ReceiptsController < ApplicationController
   # GET /receipts/new
   def new
     @receipt = Receipt.new
+    3.times { receipt_item = @receipt.receipt_items.build }
   end
 
   # GET /receipts/1/edit
