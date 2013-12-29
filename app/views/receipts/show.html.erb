@@ -12,7 +12,7 @@
 
 <p>
   <strong>Purchase type:</strong>
-  <%= @receipt.purchase_type %>
+  <%= @receipt.purchase_type.name %>
 </p>
 
 <p>
@@ -32,12 +32,12 @@
 
 <p>
   <strong>Vendor:</strong>
-  <%= @receipt.vendor %>
+  <%= @receipt.vendor.name %>
 </p>
 
 <p>
   <strong>Currency:</strong>
-  <%= @receipt.currency %>
+  <%= @receipt.currency.name %>
 </p>
 
 <%= link_to 'Edit', edit_receipt_path(@receipt) %> |

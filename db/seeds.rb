@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-["Product", "Subscription", "Fee", "Tax", "Discount"].each do |it|
+["Nintendo 3DS", "Water Bottle", "Fee", "Tax", "Discount"].each do |it|
   ItemType.find_or_create_by_name(it)
 end
 

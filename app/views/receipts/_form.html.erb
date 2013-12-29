@@ -50,7 +50,7 @@
 
   <h2>Receipt Items</h2>
 
-  <div id="receipt_items">
+  <div>
     <%= f.fields_for :receipt_items do |builder| %>
       <%= render "item_fields", :f => builder %>
     <% end %>
