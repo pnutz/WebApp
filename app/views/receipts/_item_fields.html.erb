@@ -1,0 +1,21 @@
+<p class="fields">
+ <div class="field">
+    <%= f.label :item_type_id %><br>
+    <%= f.collection_select :item_type_id, ItemType.all, :id, :name, :include_blank => true %>
+  </div>
+  <div class="field">
+    <%= f.label :cost %><br>
+    <%= f.text_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br>
+    <%= f.number_field :quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :is_credit %><br>
+    <%= f.check_box :is_credit %>
+  </div>
+  <%= f.hidden_field :_destroy %>
+<label id="hihi">hihi</label>
+  <%= link_to_function "Remove Receipt Item", "remove_fields(this)" %>
+</p>

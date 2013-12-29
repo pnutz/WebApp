@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :date %><br>
+    <%= f.text_field :date %>
+  </div>
+  <div class="field">
     <%= f.label :total %><br>
     <%= f.text_field :total %>
   </div>
@@ -41,8 +45,17 @@
   </div>
   <div class="field">
     <%= f.label :currency_id %><br>
-    <%= f.collection_select :currency_id, Currency.all, :id, :type, :include_blank => true %>
+    <%= f.collection_select :currency_id, Currency.all, :id, :name, :include_blank => true %>
   </div>
+
+  <h2>Receipt Items</h2>
+
+  <div>
+    <%= f.fields_for :receipt_items do |builder| %>
+      <%= render "item_fields", :f => builder %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -5,3 +5,52 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+["Nintendo 3DS", "Water Bottle", "Fee", "Tax", "Discount"].each do |it|
+  ItemType.find_or_create_by_name(it)
+end
+
+["Online", "Physical"].each do |pt|
+  PurchaseType.find_or_create_by_name(pt)
+end
+
+["Canada", "USA"].each do |country|
+  Country.find_or_create_by_name(country)
+end
+
+canada = Country.find_by_name("Canada")
+["BC", "AB"].each do |ps|
+  canada.province_states.find_or_create_by_name(ps)
+end
+
+usa = Country.find_by_name("USA")
+["WA"].each do |ps|
+  usa.province_states.find_or_create_by_name(ps)
+end
+
+bc = ProvinceState.find_by_name("BC")
+["Vancouver", "Burnaby", "Richmond", "Surrey", "North Vancouver"].each do |city|
+  bc.cities.find_or_create_by_name(city)
+end
+
+ab = ProvinceState.find_by_name("AB")
+["Calgary", "Edmonton"].each do |city|
+  ab.cities.find_or_create_by_name(city)
+end
+
+wa = ProvinceState.find_by_name("WA")
+["Seattle"].each do |city|
+  wa.cities.find_or_create_by_name(city)
+end
+
+["CAD", "USD"].each do |cur|
+  Currency.find_or_create_by_name(cur)
+end
+
+["Business", "Personal"].each do |ft|
+  FolderType.find_or_create_by_name(ft)
+end
+
+["Amazon", "EBay"].each do |ven|
+  Vendor.find_or_create_by_name(ven)
+end

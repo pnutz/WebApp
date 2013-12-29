@@ -22,12 +22,12 @@
       <tr>
         <td><%= receipt.total %></td>
         <td><%= receipt.transaction_number %></td>
-        <td><%= receipt.purchase_type %></td>
+        <td><%= receipt.purchase_type.name %></td>
         <td><%= receipt.title %></td>
         <td><%= receipt.folder.name %></td>
         <td><%= receipt.note %></td>
-        <td><%= receipt.vendor %></td>
-        <td><%= receipt.currency %></td>
+        <td><%= receipt.vendor.name %></td>
+        <td><%= receipt.currency.name %></td>
         <td><%= link_to 'Show', receipt %></td>
         <td><%= link_to 'Edit', edit_receipt_path(receipt) %></td>
         <td><%= link_to 'Destroy', receipt, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -4,5 +4,7 @@ class Receipt < ActiveRecord::Base
   belongs_to :vendor
   belongs_to :currency
 
-  has_many :receipt_items
+  has_many :receipt_items, :dependent => :destroy
+
+  accepts_nested_attributes_for :receipt_items, :allow_destroy => true
 end
