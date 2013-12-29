@@ -27,6 +27,9 @@ gem 'rspec-rails'
 # Use Devise for our user authentication
 gem 'devise'
 
+# Use Cocoon for easy-to-handle nested forms
+gem 'cocoon'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
