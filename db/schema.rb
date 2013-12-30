@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131228224841) do
+ActiveRecord::Schema.define(version: 20131230045546) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -35,9 +35,10 @@ ActiveRecord::Schema.define(version: 20131228224841) do
   end
 
   create_table "currencies", force: true do |t|
-    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "description"
+    t.string   "code"
   end
 
   create_table "extensions", force: true do |t|
