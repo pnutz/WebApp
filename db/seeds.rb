@@ -44,7 +44,7 @@ wa = ProvinceState.find_by_name("WA")
 end
 
 ["CAD", "USD"].each do |cur|
-  Currency.find_or_create_by_name(cur)
+  Currency.find_or_create_by_code(cur)
 end
 
 ["Business", "Personal"].each do |ft|
