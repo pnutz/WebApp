@@ -12,6 +12,7 @@ WebApp::Application.routes.draw do
   end
 
   resources :receipts
+  resources :currencies
 
   resources :folders
 
