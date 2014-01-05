@@ -50,10 +50,15 @@
 
   <h2>Receipt Items</h2>
 
-  <div>
-    <%= f.fields_for :receipt_items do |builder| %>
-      <%= render "item_fields", :f => builder %>
+  <div id="items">
+    <%= f.fields_for :receipt_items do |item| %>
+      <%= render "receipt_item_fields", :f => item %>
     <% end %>
+    <br />
+    <div id="links">
+      <%-# link_to_add_association is part of the cocoon gem for nested fields -%>
+      <%= link_to_add_association "Add Receipt Item", f, :receipt_items %>
+    </div>
   </div>
 
   <div class="actions">
