@@ -13,6 +13,7 @@ WebApp::Application.routes.draw do
 
   resources :receipts
   resources :currencies
+  resources :purchase_types
 
   resources :folders
 
