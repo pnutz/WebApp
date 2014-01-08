@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Title:</strong>
+  <%= @receipt.title %>
+</p>
+
+<p>
   <strong>Total:</strong>
   <%= @receipt.total %>
 </p>
@@ -13,11 +18,6 @@
 <p>
   <strong>Purchase type:</strong>
   <%= @receipt.purchase_type.name %>
-</p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @receipt.title %>
 </p>
 
 <p>
@@ -40,5 +40,31 @@
   <%= @receipt.currency.code %>
 </p>
 
+<p>
+  <% if (@receipt.receipt_items != nil) %>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Cost</th>
+        <th>Total</th>
+      </tr>
+      <% @receipt.receipt_items.each do |item| %>
+        <tr>
+          <td><%= item.item_type.name %></td>
+          <td><%= item.quantity %></td>
+          <% if (item.is_credit == false) %>
+            <td><%= item.cost %></td>
+            <td><%= item.cost * item.quantity %></td>
+          <% else %>
+            <td><%= -1 * item.cost %></td>
+            <td><%= -1 * item.cost * item.quantity %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+</p>
+  
 <%= link_to 'Edit', edit_receipt_path(@receipt) %> |
 <%= link_to 'Back', receipts_path %>

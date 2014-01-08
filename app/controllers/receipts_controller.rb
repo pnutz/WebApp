@@ -15,7 +15,6 @@ class ReceiptsController < ApplicationController
   # GET /receipts/new
   def new
     @receipt = Receipt.new
-    3.times { @receipt.receipt_items.build }
   end
 
   # GET /receipts/1/edit
@@ -26,6 +25,8 @@ class ReceiptsController < ApplicationController
   # POST /receipts.json
   def create
     @receipt = Receipt.new(receipt_params)
+
+    update_receipt_total
 
     respond_to do |format|
       if @receipt.save
@@ -43,6 +44,9 @@ class ReceiptsController < ApplicationController
   def update
     respond_to do |format|
       if @receipt.update(receipt_params)
+
+        update_receipt_total
+
         format.html { redirect_to @receipt, notice: 'Receipt was successfully updated.' }
         format.json { head :no_content }
       else
@@ -66,6 +70,19 @@ class ReceiptsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_receipt
       @receipt = Receipt.find(params[:id])
+    end
+
+    # Re-calculates receipt total based on receipt items. Requires before_action :set_receipt to use @receipt
+    def update_receipt_total
+      @receipt.total = 0
+      @receipt.receipt_items.each do |item|
+        if (item.is_credit == false)
+          @receipt.total = @receipt.total + (item.cost * item.quantity)
+        else
+          @receipt.total = @receipt.total - (item.cost * item.quantity)
+        end
+      end
+      @receipt.save
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
