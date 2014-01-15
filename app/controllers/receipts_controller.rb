@@ -24,7 +24,17 @@ class ReceiptsController < ApplicationController
   # POST /receipts
   # POST /receipts.json
   def create
-    @receipt = Receipt.new(receipt_params)
+    #Try to find existing vendor
+    newReceipt = receipt_params
+    vendor = Vendor.find_by name: newReceipt[:vendor_name]
+    #if we don't have a vendor by this name then create it
+    if (vendor == nil)
+      vendor = Vendor.create(name: newReceipt[:vendor_name])
+    end
+    newReceipt[:vendor_id] = vendor.id
+    newReceipt.delete(:vendor_name)
+
+    @receipt = Receipt.new(newReceipt)
 
     update_receipt_total
 
@@ -87,6 +97,6 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :currency_id, receipt_items_attributes: [ :id, :item_type_id, :cost, :quantity, :is_credit, :_destroy ])
+      params.require(:receipt).permit(:date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :vendor_name, :currency_id, receipt_items_attributes: [ :id, :item_type_id, :cost, :quantity, :is_credit, :_destroy ])
     end
 end
