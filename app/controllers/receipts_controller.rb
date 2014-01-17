@@ -36,8 +36,17 @@ class ReceiptsController < ApplicationController
         item[:item_type_id] = type.id
       end
     end
+    
+    # try to find existing vendor
+    vendor = Vendor.find_by name: newReceipt[:vendor_name]
+    # if we don't have a vendor by this name then create it
+    if (vendor == nil)
+      vendor = Vendor.create(name: newReceipt[:vendor_name])
+    end
+    newReceipt[:vendor_id] = vendor.id
 
-    # remove nested itemtype key before creating receipt, since it is not in model
+    # remove vendor_name and nested itemtype key before creating receipt, since it is not in model
+    newReceipt.delete(:vendor_name)
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
 
     @receipt = Receipt.new(newReceipt)
@@ -109,6 +118,6 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:date, :purchase_type_id, :title, :folder_id, :vendor_id, :currency_id, :total, :transaction_number, :note, receipt_items_attributes: [ :id, :item_type_id, :cost, :quantity, :is_credit, :_destroy, :itemtype ])
+      params.require(:receipt).permit(:date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :vendor_name, :currency_id, receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ])
     end
 end
