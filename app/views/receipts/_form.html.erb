@@ -43,7 +43,15 @@
   </div>
   <div class="field">
     <%= f.label :vendor_id %><br>
-    <%= f.collection_select :vendor_id, Vendor.all, :id, :name, :include_blank => true %>
+      <%-# if loop is entered if Editing receipt %>
+      <% if (f.object.vendor_id != nil) %>
+        <%= f.text_field "vendor_name", :value => Vendor.find(f.object.vendor_id).name %>
+        <%= f.hidden_field :vendor_id %>
+      <%-# else loop is entered if Creating receipt %>
+      <% else %>
+        <%= f.text_field "vendor_name", :value => "" %>
+        <%= f.hidden_field :vendor_id, :value => "0"  %>
+      <% end %>
   </div>
   <div class="field">
     <%= f.label :currency_id %><br>
