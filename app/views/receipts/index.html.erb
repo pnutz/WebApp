@@ -9,6 +9,7 @@
 <table id="allReceipts">
   <thead>
     <tr>
+      <th>Date</th>
       <th>Total</th>
       <th>Transaction number</th>
       <th>Purchase type</th>
@@ -26,6 +27,7 @@
   <tbody>
     <% @receipts.each do |receipt| %>
       <tr>
+        <td><%= receipt.date.strftime("%m/%d/%Y") %></td>
         <td><%= receipt.total %></td>
         <td><%= receipt.transaction_number %></td>
         <td><%= receipt.purchase_type.name %></td>
