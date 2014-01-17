@@ -1,7 +1,15 @@
 <div class="nested-fields">
     <div class="field">
       <%= f.label :item_type_id %><br>
-      <%= f.collection_select :item_type_id, ItemType.all, :id, :name, :include_blank => true %>
+      <%-# if loop is entered if Editing receipt %>
+      <% if (f.object.item_type_id != nil) %>
+        <%= f.text_field "itemtype", :value => ItemType.find(f.object.item_type_id).name %>
+        <%= f.hidden_field :item_type_id %>
+      <%-# else loop is entered if Creating receipt %>
+      <% else %>
+        <%= f.text_field "itemtype", :value => "" %>
+        <%= f.hidden_field :item_type_id, :value => "0"  %>
+      <% end %>
     </div>
     <div class="field">
       <%= f.label :cost %><br>

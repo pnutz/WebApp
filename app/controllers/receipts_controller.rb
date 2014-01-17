@@ -24,7 +24,23 @@ class ReceiptsController < ApplicationController
   # POST /receipts
   # POST /receipts.json
   def create
-    @receipt = Receipt.new(receipt_params)
+    newReceipt = receipt_params
+    newReceipt[:receipt_items_attributes].values.each do |item|
+      # only look at receipt items that will be created
+      if (item[:_destroy] == "false")
+        # create new ItemType if it does not exist, set item_type_id if it exists
+        type = ItemType.find_by name: item[:itemtype]
+        if (type == nil)
+          type = ItemType.create(:name => item[:itemtype])
+        end
+        item[:item_type_id] = type.id
+      end
+    end
+
+    # remove nested itemtype key before creating receipt, since it is not in model
+    newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
+
+    @receipt = Receipt.new(newReceipt)
 
     update_receipt_total
 
@@ -43,7 +59,13 @@ class ReceiptsController < ApplicationController
   # PATCH/PUT /receipts/1.json
   def update
     respond_to do |format|
-      if @receipt.update(receipt_params)
+
+      updateReceipt = receipt_params
+      # remove nested itemtype key before creating receipt, since it is not in model
+      updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
+
+
+      if @receipt.update(updateReceipt)
 
         update_receipt_total
 
@@ -87,6 +109,6 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :currency_id, receipt_items_attributes: [ :id, :item_type_id, :cost, :quantity, :is_credit, :_destroy ])
+      params.require(:receipt).permit(:date, :purchase_type_id, :title, :folder_id, :vendor_id, :currency_id, :total, :transaction_number, :note, receipt_items_attributes: [ :id, :item_type_id, :cost, :quantity, :is_credit, :_destroy, :itemtype ])
     end
 end

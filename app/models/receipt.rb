@@ -6,5 +6,5 @@ class Receipt < ActiveRecord::Base
 
   has_many :receipt_items, :dependent => :destroy
 
-  accepts_nested_attributes_for :receipt_items, :allow_destroy => true
+  accepts_nested_attributes_for :receipt_items, reject_if: :all_blank, :allow_destroy => true
 end
