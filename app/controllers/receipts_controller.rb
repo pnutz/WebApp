@@ -70,9 +70,30 @@ class ReceiptsController < ApplicationController
     respond_to do |format|
 
       updateReceipt = receipt_params
-      # remove nested itemtype key before creating receipt, since it is not in model
-      updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
 
+      updateReceipt[:receipt_items_attributes].values.each do |item|
+        # only look at receipt items that will be created
+        if (item[:_destroy] == "false")
+          # create new ItemType if it does not exist, set item_type_id if it exists
+          type = ItemType.find_by name: item[:itemtype]
+          if (type == nil)
+            type = ItemType.create(:name => item[:itemtype])
+          end
+          item[:item_type_id] = type.id
+        end
+      end
+
+      # try to find existing vendor
+      vendor = Vendor.find_by name: updateReceipt[:vendor_name]
+        # if we don't have a vendor by this name then create it
+        if (vendor == nil)
+          vendor = Vendor.create(name: updateReceipt[:vendor_name])
+        end
+      updateReceipt[:vendor_id] = vendor.id
+
+      # remove vendor_name and nested itemtype key before creating receipt, since it is not in model
+      updateReceipt.delete(:vendor_name)
+      updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
 
       if @receipt.update(updateReceipt)
 
