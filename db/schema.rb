@@ -63,9 +63,9 @@ ActiveRecord::Schema.define(version: 20131230045546) do
     t.datetime "updated_at"
   end
 
-  add_index "folders", ["folder_id"], name: "index_folders_on_folder_id"
-  add_index "folders", ["folder_type_id"], name: "index_folders_on_folder_type_id"
-  add_index "folders", ["user_id"], name: "index_folders_on_user_id"
+  add_index "folders", ["folder_id"], name: "index_folders_on_folder_id", using: :btree
+  add_index "folders", ["folder_type_id"], name: "index_folders_on_folder_type_id", using: :btree
+  add_index "folders", ["user_id"], name: "index_folders_on_user_id", using: :btree
 
   create_table "item_types", force: true do |t|
     t.string   "name",       null: false
@@ -94,9 +94,9 @@ ActiveRecord::Schema.define(version: 20131230045546) do
     t.integer  "billing_address_id"
   end
 
-  add_index "receipt_details", ["billing_address_id"], name: "index_receipt_details_on_billing_address_id"
-  add_index "receipt_details", ["receipt_id"], name: "index_receipt_details_on_receipt_id"
-  add_index "receipt_details", ["shipping_address_id"], name: "index_receipt_details_on_shipping_address_id"
+  add_index "receipt_details", ["billing_address_id"], name: "index_receipt_details_on_billing_address_id", using: :btree
+  add_index "receipt_details", ["receipt_id"], name: "index_receipt_details_on_receipt_id", using: :btree
+  add_index "receipt_details", ["shipping_address_id"], name: "index_receipt_details_on_shipping_address_id", using: :btree
 
   create_table "receipt_items", force: true do |t|
     t.integer  "receipt_id"
@@ -108,11 +108,11 @@ ActiveRecord::Schema.define(version: 20131230045546) do
     t.datetime "updated_at"
   end
 
-  add_index "receipt_items", ["item_type_id"], name: "index_receipt_items_on_item_type_id"
-  add_index "receipt_items", ["receipt_id"], name: "index_receipt_items_on_receipt_id"
+  add_index "receipt_items", ["item_type_id"], name: "index_receipt_items_on_item_type_id", using: :btree
+  add_index "receipt_items", ["receipt_id"], name: "index_receipt_items_on_receipt_id", using: :btree
 
   create_table "receipts", force: true do |t|
-    t.decimal  "total"
+    t.decimal  "total",              precision: 10, scale: 0
     t.string   "transaction_number"
     t.integer  "purchase_type_id"
     t.string   "title"
@@ -125,10 +125,10 @@ ActiveRecord::Schema.define(version: 20131230045546) do
     t.datetime "date"
   end
 
-  add_index "receipts", ["currency_id"], name: "index_receipts_on_currency_id"
-  add_index "receipts", ["folder_id"], name: "index_receipts_on_folder_id"
-  add_index "receipts", ["purchase_type_id"], name: "index_receipts_on_purchase_type_id"
-  add_index "receipts", ["vendor_id"], name: "index_receipts_on_vendor_id"
+  add_index "receipts", ["currency_id"], name: "index_receipts_on_currency_id", using: :btree
+  add_index "receipts", ["folder_id"], name: "index_receipts_on_folder_id", using: :btree
+  add_index "receipts", ["purchase_type_id"], name: "index_receipts_on_purchase_type_id", using: :btree
+  add_index "receipts", ["vendor_id"], name: "index_receipts_on_vendor_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -146,8 +146,8 @@ ActiveRecord::Schema.define(version: 20131230045546) do
     t.string   "authentication_token"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "vendors", force: true do |t|
     t.string   "name",       null: false
