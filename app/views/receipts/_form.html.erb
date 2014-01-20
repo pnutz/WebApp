@@ -17,7 +17,11 @@
   </div>
   <div class="field">
     <%= f.label :date %><br>
-    <%= f.text_field :date, :value => @receipt.date.strftime("%m/%d/%Y") %>
+	<% if (@receipt.date != nil) %>
+	  <%= f.text_field :date, :value => @receipt.date.strftime("%m/%d/%Y") %>
+	<% else %>
+	  <%= f.text_field :date, :value => Date.today.strftime("%m/%d/%Y") %>
+	<% end %>
   </div>
   <% if (@receipt.total != nil) %>
     <div class="field">

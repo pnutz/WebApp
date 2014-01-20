@@ -25,17 +25,22 @@ class ReceiptsController < ApplicationController
   # POST /receipts.json
   def create
     newReceipt = receipt_params
-    newReceipt[:receipt_items_attributes].values.each do |item|
-      # only look at receipt items that will be created
-      if (item[:_destroy] == "false")
-        # create new ItemType if it does not exist, set item_type_id if it exists
-        type = ItemType.find_by name: item[:itemtype]
-        if (type == nil)
-          type = ItemType.create(:name => item[:itemtype])
-        end
-        item[:item_type_id] = type.id
-      end
-    end
+		
+		newReceipt[:date] = Timeliness.parse(receipt_params[:date], :format => 'mm/dd/yyyy')
+		
+		if (newReceipt[:receipt_items_attributes] != nil)
+			newReceipt[:receipt_items_attributes].values.each do |item|
+				# only look at receipt items that will be created
+				if (item[:_destroy] == "false")
+					# create new ItemType if it does not exist, set item_type_id if it exists
+					type = ItemType.find_by name: item[:itemtype]
+					if (type == nil)
+						type = ItemType.create(:name => item[:itemtype])
+					end
+					item[:item_type_id] = type.id
+				end
+			end
+		end
     
     # try to find existing vendor
     vendor = Vendor.find_by name: newReceipt[:vendor_name]
@@ -70,19 +75,23 @@ class ReceiptsController < ApplicationController
     respond_to do |format|
 
       updateReceipt = receipt_params
-
-      updateReceipt[:receipt_items_attributes].values.each do |item|
-        # only look at receipt items that will be created
-        if (item[:_destroy] == "false")
-          # create new ItemType if it does not exist, set item_type_id if it exists
-          type = ItemType.find_by name: item[:itemtype]
-          if (type == nil)
-            type = ItemType.create(:name => item[:itemtype])
-          end
-          item[:item_type_id] = type.id
-        end
-      end
-
+			
+			updateReceipt[:date] = Timeliness.parse(receipt_params[:date], :format => 'mm/dd/yyyy')
+			
+			if (updateReceipt[:receipt_items_attributes] != nil)
+				updateReceipt[:receipt_items_attributes].values.each do |item|
+					# only look at receipt items that will be created
+					if (item[:_destroy] == "false")
+						# create new ItemType if it does not exist, set item_type_id if it exists
+						type = ItemType.find_by name: item[:itemtype]
+						if (type == nil)
+							type = ItemType.create(:name => item[:itemtype])
+						end
+						item[:item_type_id] = type.id
+					end
+				end
+			end
+				
       # try to find existing vendor
       vendor = Vendor.find_by name: updateReceipt[:vendor_name]
         # if we don't have a vendor by this name then create it
