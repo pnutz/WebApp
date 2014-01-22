@@ -25,7 +25,7 @@ class FoldersController < ApplicationController
   # POST /folders.json
   def create
     @folder = Folder.new(folder_params)
-	  @folder.user_id = current_user.id
+	@folder.user_id = current_user.id
 
     respond_to do |format|
       if @folder.save
@@ -62,6 +62,11 @@ class FoldersController < ApplicationController
     end
   end
 
+  def new_receipt
+	params[:folder_id]
+	redirect_to 
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_folder

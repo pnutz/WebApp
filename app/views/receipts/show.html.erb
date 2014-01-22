@@ -25,10 +25,12 @@
   <%= @receipt.purchase_type.name %>
 </p>
 
-<p>
-  <strong>Folder:</strong>
-  <%= @receipt.folder.name %>
-</p>
+<% if (@receipt.folder != nil) %>
+	<p>
+	  <strong>Folder:</strong>
+	  <%= @receipt.folder.name %>
+	</p>
+<% end %>
 
 <p>
   <strong>Note:</strong>

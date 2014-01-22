@@ -3,6 +3,7 @@ class Receipt < ActiveRecord::Base
   belongs_to :folder
   belongs_to :vendor
   belongs_to :currency
+  belongs_to :user
 
   has_many :receipt_items, :dependent => :destroy
 

@@ -163,6 +163,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   sdoc
   sqlite3
+  therubyracer
   timeliness
   turbolinks
   uglifier (>= 1.3.0)

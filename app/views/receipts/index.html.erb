@@ -32,7 +32,11 @@
         <td><%= receipt.transaction_number %></td>
         <td><%= receipt.purchase_type.name %></td>
         <td><%= receipt.title %></td>
-        <td><%= receipt.folder.name %></td>
+		<% if (receipt.folder != nil) %>
+			<td><%= receipt.folder.name %></td>
+		<% else %>
+			<td></td>
+		<% end %>
         <td><%= receipt.note %></td>
         <td><%= receipt.vendor.name %></td>
         <td><%= receipt.currency.code %></td>
