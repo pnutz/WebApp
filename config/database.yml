@@ -5,9 +5,13 @@
 #   gem 'sqlite3'
 development:
   adapter: sqlite3
-  database: db/development.sqlite3
+  encoding: utf8
+  database: WebApp
+# username: kjmedia
+# password: templeton
   pool: 5
   timeout: 5000
+#  socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
