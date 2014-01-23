@@ -18,7 +18,3 @@
 //= require_tree .
 //= require cocoon
 //= require jquery.tablesorter.min
-
-$(function() {
-	$("#receipt_date").datepicker();
-});

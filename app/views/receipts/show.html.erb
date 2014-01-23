@@ -39,7 +39,9 @@
 
 <p>
   <strong>Vendor:</strong>
-  <%= @receipt.vendor.name %>
+	<% if (@receipt.vendor != nil) %>
+		<%= @receipt.vendor.name %>
+	<% end %>
 </p>
 
 <p>
@@ -74,4 +76,4 @@
 </p>
   
 <%= link_to 'Edit', edit_receipt_path(@receipt) %> |
-<%= link_to 'Back', receipts_path %>
+<%= link_to 'Receipt List', receipts_path %>

@@ -1,26 +1,37 @@
 <script>
   $(document).ready(function() { 
     $("#allReceipts").tablesorter(); 
-  }); 
+  });
 </script>
 
 <h1>Listing receipts</h1>
 
-<table id="allReceipts">
+<table id="allReceipts" class="tablesorter">
+	<col width="100">
+	<col width="100">
+	<col width="200">
+	<col width="50">
+	<col width="175">
+	<col width="125">
+	<col width="100">
+	<col width="75">
+	<col width="75">
+	<col width="50">
+	<col width="40">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Total</th>
-      <th>Transaction number</th>
-      <th>Purchase type</th>
-      <th>Title</th>
-      <th>Folder</th>
-      <th>Note</th>
-      <th>Vendor</th>
-      <th>Currency</th>
-      <th></th>
-      <th></th>
-      <th></th>
+			<th>Date</th>
+			<th>Title</th>
+			<th>Note</th>
+			<th>Total</th>
+			<th>Transaction number</th>
+			<th>Purchase type</th>
+			<th>Folder</th>
+			<th>Vendor</th>
+			<th>Currency</th>
+			<th></th>
+			<th></th>
+			<th></th>
     </tr>
   </thead>
 
@@ -28,17 +39,21 @@
     <% @receipts.each do |receipt| %>
       <tr>
         <td><%= receipt.date.strftime("%m/%d/%Y") %></td>
+				<td><%= receipt.title %></td>
+        <td><%= receipt.note %></td>
         <td><%= receipt.total %></td>
         <td><%= receipt.transaction_number %></td>
         <td><%= receipt.purchase_type.name %></td>
-        <td><%= receipt.title %></td>
-		<% if (receipt.folder != nil) %>
-			<td><%= receipt.folder.name %></td>
-		<% else %>
-			<td></td>
-		<% end %>
-        <td><%= receipt.note %></td>
-        <td><%= receipt.vendor.name %></td>
+				<% if (receipt.folder != nil) %>
+					<td><%= receipt.folder.name %></td>
+				<% else %>
+					<td></td>
+				<% end %>
+				<% if (receipt.vendor != nil) %>
+					<td><%= receipt.vendor.name %></td>
+				<% else %>
+					<td></td>
+				<% end %>
         <td><%= receipt.currency.code %></td>
         <td><%= link_to 'Show', receipt %></td>
         <td><%= link_to 'Edit', edit_receipt_path(receipt) %></td>

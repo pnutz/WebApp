@@ -15,6 +15,16 @@
   <p class="alert alert-error"><%= alert %></p>
 <% end %>
 
+<p class="navbar-text pull-left">
+<% if user_signed_in? %>
+	<h2>
+		<%= link_to 'TwoReceipt', root_path %>
+		<% if (request.env['PATH_INFO'] == "/") %>
+			Home Page
+		<% end %>
+	</h2>
+<% end %>
+
 <p class="navbar-text pull-right">
 <% if user_signed_in? %>
   Logged in as <strong><%= current_user.email %></strong>.

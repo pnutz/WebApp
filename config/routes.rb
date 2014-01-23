@@ -1,8 +1,7 @@
 WebApp::Application.routes.draw do
 
   resources :receipt_items
-
-
+	
   namespace :api do
     namespace :v1  do
 #          resources :tokens,:only => [:create, :destroy]
@@ -15,7 +14,9 @@ WebApp::Application.routes.draw do
   resources :currencies
   resources :purchase_types
 
-  resources :folders
+  resources :folders do
+		resources :receipts
+	end
 
   resources :addresses
 

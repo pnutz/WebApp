@@ -1,29 +1,24 @@
-<h1>Home Page</h1>
-<% if user_signed_in? %>
-	<h1>Logged in as user with email: <%= current_user.email%></h1>
+<p>
+	<b><%= link_to 'Add Folder', new_folder_path %> | <%= link_to 'Folder List', folders_path %><br>
+	<%= link_to 'Add Receipt', new_receipt_path %> | <%= link_to 'Receipt List', receipts_path %></b>
+</p>
 
-	<p>
-		<b><%= link_to 'Add Folder', new_folder_path %> | <%= link_to 'Folder List', folders_path %><br>
-		<%= link_to 'Add Receipt', new_receipt_path %> | <%= link_to 'Receipt List', receipts_path %></b>
-	</p>
-	
+<ul>
+<% if (@receipts.count != 0) %>
+	<li>Folder-less Receipts</li>
 	<ul>
-	<% if (@receipts != nil) %>
-		<li>Folder-less Receipts</li>
-		<ul>
-		<% @receipts.each do |receipt| %>
-		
-			<li><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
-		<% end %>
-		</ul>
-	<% end %>
-	<% @userFolders.each do |userFolder| %>
-		<li><%= link_to(userFolder.name, userFolder) %></li>
-      <ul>
-        <% userFolder.receipts.each do |receipt| %>
-          <li><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
-        <% end %>
-      </ul>
+	<% @receipts.each do |receipt| %>
+	
+		<li><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
 	<% end %>
 	</ul>
 <% end %>
+<% @userFolders.each do |userFolder| %>
+	<li><%= link_to(userFolder.name, userFolder) %> (<%= link_to 'Add Receipt', new_folder_receipt_path(userFolder) %>)</li>
+		<ul>
+			<% userFolder.receipts.each do |receipt| %>
+				<li><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
+			<% end %>
+		</ul>
+<% end %>
+</ul>

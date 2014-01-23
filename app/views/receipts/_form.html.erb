@@ -1,3 +1,9 @@
+<script>
+$(function() {
+	$("#receipt_date").datepicker();
+});
+</script>
+
 <%= form_for(@receipt) do |f| %>
   <% if @receipt.errors.any? %>
     <div id="error_explanation">
@@ -59,7 +65,7 @@
   </div>
   <div class="field">
     <%= f.label :currency_id %><br>
-    <%= f.collection_select :currency_id, Currency.all, :id, :code, :include_blank => true %>
+    <%= f.collection_select :currency_id, Currency.all, :id, :currency_desc, :include_blank => true %>
   </div>
 
   <h2>Receipt Items</h2>

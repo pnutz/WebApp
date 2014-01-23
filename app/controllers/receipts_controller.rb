@@ -15,6 +15,7 @@ class ReceiptsController < ApplicationController
   # GET /receipts/new
   def new
     @receipt = Receipt.new
+		@receipt.folder_id = params[:folder_id]
   end
 
   # GET /receipts/1/edit
@@ -26,36 +27,38 @@ class ReceiptsController < ApplicationController
   def create
     newReceipt = receipt_params
 		
-	newReceipt[:date] = Timeliness.parse(receipt_params[:date], :format => 'mm/dd/yyyy')
+		newReceipt[:date] = Timeliness.parse(receipt_params[:date], :format => 'mm/dd/yyyy')
 		
-	if (newReceipt[:receipt_items_attributes] != nil)
-		newReceipt[:receipt_items_attributes].values.each do |item|
-			# only look at receipt items that will be created
-			if (item[:_destroy] == "false")
-				# create new ItemType if it does not exist, set item_type_id if it exists
-				type = ItemType.find_by name: item[:itemtype]
-				if (type == nil)
-					type = ItemType.create(:name => item[:itemtype])
+		if (newReceipt[:receipt_items_attributes] != nil)
+			newReceipt[:receipt_items_attributes].values.each do |item|
+				# only look at receipt items that will be created
+				if (item[:_destroy] == "false")
+					# create new ItemType if it does not exist, set item_type_id if it exists
+					type = ItemType.find_by name: item[:itemtype]
+					if (type == nil)
+						type = ItemType.create(:name => item[:itemtype])
+					end
+					item[:item_type_id] = type.id
 				end
-				item[:item_type_id] = type.id
 			end
 		end
-	end
-    
-    # try to find existing vendor
-    vendor = Vendor.find_by name: newReceipt[:vendor_name]
-    # if we don't have a vendor by this name then create it
-    if (vendor == nil)
-      vendor = Vendor.create(name: newReceipt[:vendor_name])
-    end
-    newReceipt[:vendor_id] = vendor.id
+		
+		if (newReceipt[:vendor_name] != "")
+			# try to find existing vendor
+			vendor = Vendor.find_by name: newReceipt[:vendor_name]
+			# if we don't have a vendor by this name then create it
+			if (vendor == nil)
+				vendor = Vendor.create(name: newReceipt[:vendor_name])
+			end
+			newReceipt[:vendor_id] = vendor.id
+		end
 
     # remove vendor_name and nested itemtype key before creating receipt, since it is not in model
     newReceipt.delete(:vendor_name)
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
 
     @receipt = Receipt.new(newReceipt)
-	@receipt.user_id = current_user.id
+		@receipt.user_id = current_user.id
 	
     update_receipt_total
 
@@ -97,7 +100,7 @@ class ReceiptsController < ApplicationController
       vendor = Vendor.find_by name: updateReceipt[:vendor_name]
       # if we don't have a vendor by this name then create it
       if (vendor == nil)
-		vendor = Vendor.create(name: updateReceipt[:vendor_name])
+			vendor = Vendor.create(name: updateReceipt[:vendor_name])
       end
       updateReceipt[:vendor_id] = vendor.id
 
