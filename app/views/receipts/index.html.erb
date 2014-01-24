@@ -41,7 +41,7 @@
         <td><%= receipt.date.strftime("%m/%d/%Y") %></td>
 				<td><%= receipt.title %></td>
         <td><%= receipt.note %></td>
-        <td><%= receipt.total %></td>
+        <td>$<%= number_with_precision(receipt.total, :precision => 2) %></td>
         <td><%= receipt.transaction_number %></td>
         <td><%= receipt.purchase_type.name %></td>
 				<% if (receipt.folder != nil) %>

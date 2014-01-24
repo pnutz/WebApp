@@ -32,7 +32,7 @@ $(function() {
   <% if (@receipt.total != nil) %>
     <div class="field">
       <%= f.label :total %><br>
-      <%= @receipt.total %>
+      <%= f.text_field :total, :value => number_with_precision(@receipt.total, :precision => 2)  %>
     </div>
   <% end %>
   <div class="field">
