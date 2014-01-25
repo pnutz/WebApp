@@ -6,10 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-["Nintendo 3DS", "Water Bottle", "Fee", "Tax", "Discount"].each do |it|
-  ItemType.find_or_create_by_name(it)
-end
-
 ["Online", "Physical"].each do |pt|
   PurchaseType.find_or_create_by_name(pt)
 end
@@ -43,14 +39,9 @@ wa = ProvinceState.find_by_name("WA")
   wa.cities.find_or_create_by_name(city)
 end
 
-["CAD", "USD"].each do |cur|
-  Currency.find_or_create_by_code(cur)
-end
+Currency.create(:code => "CAD", :description => "Canadian Dollars")
+Currency.create(:code => "USD", :description => "US Dollars")
 
 ["Business", "Personal"].each do |ft|
   FolderType.find_or_create_by_name(ft)
-end
-
-["Amazon", "EBay"].each do |ven|
-  Vendor.find_or_create_by_name(ven)
 end

@@ -1,16 +1,21 @@
 <h1>Listing folders</h1>
 
 <table>
+	<col width="110">
+	<col width="150">
+	<col width="100">
+	<col width="75">
+	<col width="50">
+	<col width="40">
   <thead>
-    <tr>
+		<tr>
       <th>Name</th>
       <th>Description</th>
-      <th>User</th>
       <th>Folder type</th>
       <th>Folder</th>
       <th></th>
       <th></th>
-      <th></th>
+			<th></th>
     </tr>
   </thead>
 
@@ -19,7 +24,6 @@
       <tr>
         <td><%= folder.name %></td>
         <td><%= folder.description %></td>
-        <td><%= folder.user.email %></td>
         <td><%= folder.folder_type.name %></td>
         <td>
           <% if (folder.folder != nil) %>

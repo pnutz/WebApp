@@ -7,7 +7,7 @@
 
 <p>
   <strong>Date:</strong>
-  <%= @receipt.date.strftime("%m/%d/%Y") %>
+	<%= @receipt.date.strftime("%m/%d/%Y") %>
 </p>
 
 <p>
@@ -25,10 +25,12 @@
   <%= @receipt.purchase_type.name %>
 </p>
 
-<p>
-  <strong>Folder:</strong>
-  <%= @receipt.folder.name %>
-</p>
+<% if (@receipt.folder != nil) %>
+	<p>
+	  <strong>Folder:</strong>
+	  <%= @receipt.folder.name %>
+	</p>
+<% end %>
 
 <p>
   <strong>Note:</strong>
@@ -37,7 +39,9 @@
 
 <p>
   <strong>Vendor:</strong>
-  <%= @receipt.vendor.name %>
+	<% if (@receipt.vendor != nil) %>
+		<%= @receipt.vendor.name %>
+	<% end %>
 </p>
 
 <p>
@@ -48,6 +52,9 @@
 <p>
   <% if (@receipt.receipt_items != nil) %>
     <table>
+			<col width="100">
+			<col width="70">
+			<col width="45">
       <tr>
         <th>Item</th>
         <th>Quantity</th>
@@ -72,4 +79,4 @@
 </p>
   
 <%= link_to 'Edit', edit_receipt_path(@receipt) %> |
-<%= link_to 'Back', receipts_path %>
+<%= link_to 'Receipt List', receipts_path %>
