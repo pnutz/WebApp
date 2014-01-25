@@ -24,16 +24,20 @@ class ReceiptsController < ApplicationController
   # POST /receipts
   # POST /receipts.json
   def create
+    puts receipt_params
     newReceipt = receipt_params
-    newReceipt[:receipt_items_attributes].values.each do |item|
-      # only look at receipt items that will be created
-      if (item[:_destroy] == "false")
-        # create new ItemType if it does not exist, set item_type_id if it exists
-        type = ItemType.find_by name: item[:itemtype]
-        if (type == nil)
-          type = ItemType.create(:name => item[:itemtype])
+    if newReceipt.key?(:receipt_items_attributes)
+      newReceipt[:receipt_items_attributes].values.each do |item|
+      puts item
+        # only look at receipt items that will be created
+        if (item[:_destroy] == "false")
+          # create new ItemType if it does not exist, set item_type_id if it exists
+          type = ItemType.find_by name: item[:itemtype]
+          if (type == nil)
+            type = ItemType.create(:name => item[:itemtype])
+          end
+          item[:item_type_id] = type.id
         end
-        item[:item_type_id] = type.id
       end
     end
     
