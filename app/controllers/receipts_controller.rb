@@ -59,8 +59,6 @@ class ReceiptsController < ApplicationController
 
     @receipt = Receipt.new(newReceipt)
     @receipt.user_id = current_user.id
-  
-    update_receipt_total
 
     respond_to do |format|
       if @receipt.save
@@ -109,9 +107,6 @@ class ReceiptsController < ApplicationController
       updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
 
       if @receipt.update(updateReceipt)
-
-        update_receipt_total
-
         format.html { redirect_to @receipt, notice: 'Receipt was successfully updated.' }
         format.json { head :no_content }
       else
@@ -135,19 +130,6 @@ class ReceiptsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_receipt
       @receipt = Receipt.find(params[:id])
-    end
-
-    # Re-calculates receipt total based on receipt items. Requires before_action :set_receipt to use @receipt
-    def update_receipt_total
-      @receipt.total = 0
-      @receipt.receipt_items.each do |item|
-        if (item.is_credit == false)
-          @receipt.total = @receipt.total + (item.cost * item.quantity)
-        else
-          @receipt.total = @receipt.total - (item.cost * item.quantity)
-        end
-      end
-      @receipt.save
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,10 +1,82 @@
-<script>
-$(function() {
-	$("#receipt_date").datepicker();
-});
-</script>
-
 <%= form_for(@receipt) do |f| %>
+	<script>
+		$(document).ready(function() {
+			$("#receipt_date").datepicker();
+			
+			// initialize receipt item count
+			var receiptItemCount = $('.nested-fields').length;
+			if (receiptItemCount != 0)
+			{
+				$("#receipt_total").prop('readonly', true);
+				$("#receipt_total").addClass('input-disabled');
+			}
+			
+			// disable or enable total based on adding/removing associations
+			$(document).on('click', "a[name = 'receiptItemAssociation']", function(event) {
+				// receipt_item added
+				if (event.target.id == "addReceiptItem")
+				{
+					receiptItemCount++;
+					$("#receipt_total").prop('readonly', true);
+					$("#receipt_total").addClass('input-disabled');
+				}
+				// receipt_item removed
+				else
+				{
+					receiptItemCount--;
+					
+					// receipt[receipt_items_attributes][index][_destroy] is the previous element to remove link
+					var itemFullName = $(this).prev().attr('name');
+					// parse index from name
+					// since click event occurs before link, _destroy will not be true for removed item. ignore it in calculation
+					updateTotal(itemFullName.substring(34, itemFullName.length - 11));
+					
+					console.log(receiptItemCount);
+					if (receiptItemCount == 0)
+					{
+						$("#receipt_total").prop('readonly', false);
+						$("#receipt_total").removeClass('input-disabled');
+					}
+				}
+			});
+			
+			$(document).on('keyup', '.calculation', function() {
+				updateTotal();
+			});
+			
+			$(document).on('change', '.creditCalculation', function() {
+				updateTotal();
+			});
+			
+			// calculate total text field value.  ignore data from optional argument indexRemoved
+			function updateTotal(indexRemoved) {
+				indexRemoved = (typeof indexRemoved === "undefined") ? -1 : indexRemoved;
+			
+				var total = 0;
+				// go through each receipt item (by is_credit element)
+				$('.creditCalculation').each( function() {
+					var currentName = $(this).attr('name');
+					// parse index of element name
+					var index = currentName.substring(34, currentName.length - 12);
+					if ($("[name='receipt[receipt_items_attributes][" + index + "][_destroy]']").val() == "false" && index != indexRemoved)
+					{
+						var itemcost = $("[name='receipt[receipt_items_attributes][" + index + "][cost]']").val() * $("[name='receipt[receipt_items_attributes][" + index + "][quantity]']").val();
+						
+						if ($("[name='receipt[receipt_items_attributes][" + index + "][is_credit]']").is(':checked'))
+						{
+							total -= itemcost;
+						}
+						else
+						{
+							total += itemcost;
+						}
+					}
+				});
+				$("#receipt_total").val(total);
+			}
+		});
+	</script>
+	
   <% if @receipt.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@receipt.errors.count, "error") %> prohibited this receipt from being saved:</h2>
@@ -29,12 +101,6 @@ $(function() {
 	  <%= f.text_field :date, :value => Date.today.strftime("%m/%d/%Y") %>
 	<% end %>
   </div>
-  <% if (@receipt.total != nil) %>
-    <div class="field">
-      <%= f.label :total %><br>
-      <%= f.text_field :total, :value => number_with_precision(@receipt.total, :precision => 2)  %>
-    </div>
-  <% end %>
   <div class="field">
     <%= f.label :transaction_number %><br>
     <%= f.text_field :transaction_number %>
@@ -69,7 +135,12 @@ $(function() {
   </div>
 
   <h2>Receipt Items</h2>
-
+	
+  <div class="field">
+    <%= f.label :total %><br>
+    $ <%= f.text_field :total, :value => (@receipt.total == nil) ? 0 : number_with_precision(@receipt.total, :precision => 2) %>
+  </div>
+	
   <div id="items">
     <%= f.fields_for :receipt_items do |item| %>
       <%= render "receipt_item_fields", :f => item %>
@@ -78,7 +149,7 @@ $(function() {
     <br />
     <div id="links">
       <%-# link_to_add_association is part of the cocoon gem for nested fields -%>
-      <%= link_to_add_association "Add Receipt Item", f, :receipt_items %>
+      <%= link_to_add_association "Add Receipt Item", f, :receipt_items, { :id => "addReceiptItem", :name => "receiptItemAssociation" } %>
     </div>
   </div>
 
