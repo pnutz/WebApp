@@ -40,11 +40,15 @@
 				}
 			});
 			
-			$(document).on('keyup', '.calculation', function() {
+			$(document).on('keyup', '.item_cost', function() {
 				updateTotal();
 			});
 			
-			$(document).on('change', '.creditCalculation', function() {
+			$(document).on('change', '.item_quantity', function() {
+				updateTotal();
+			});
+			
+			$(document).on('keyup', '.item_quantity', function() {
 				updateTotal();
 			});
 			
@@ -54,24 +58,18 @@
 			
 				var total = 0;
 				// go through each receipt item (by is_credit element)
-				$('.creditCalculation').each( function() {
-					var currentName = $(this).attr('name');
+				var item_cost = $('.item_cost');
+				for (var index = 0; index < item_cost.length; index++)
+				{
+					var currentName = item_cost.eq(index).attr('name');
 					// parse index of element name
-					var index = currentName.substring(34, currentName.length - 12);
+					var index = currentName.substring(35, currentName.length - 8);
 					if ($("[name='receipt[receipt_items_attributes][" + index + "][_destroy]']").val() == "false" && index != indexRemoved)
 					{
 						var itemcost = $("[name='receipt[receipt_items_attributes][" + index + "][cost]']").val() * $("[name='receipt[receipt_items_attributes][" + index + "][quantity]']").val();
-						
-						if ($("[name='receipt[receipt_items_attributes][" + index + "][is_credit]']").is(':checked'))
-						{
-							total -= itemcost;
-						}
-						else
-						{
-							total += itemcost;
-						}
+						total += itemcost;
 					}
-				});
+				}
 				$("#receipt_total").val(total);
 			}
 		});

@@ -39,6 +39,15 @@ class ReceiptsController < ApplicationController
             type = ItemType.create(:name => item[:itemtype])
           end
           item[:item_type_id] = type.id
+					
+					# set all costs to positive and define is_credit
+					int_cost = item[:cost].to_i
+					if (int_cost >= 0)
+						item[:is_credit] = false
+					else
+						item[:is_credit] = true
+						item[:cost] = (int_cost * -1).to_s
+					end
         end
       end
     end
@@ -90,6 +99,15 @@ class ReceiptsController < ApplicationController
               type = ItemType.create(:name => item[:itemtype])
             end
             item[:item_type_id] = type.id
+						
+						# set all costs to positive and define is_credit
+						int_cost = item[:cost].to_i
+						if (int_cost >= 0)
+							item[:is_credit] = false
+						else
+							item[:is_credit] = true
+							item[:cost] = (int_cost * -1).to_s
+						end
           end
         end
       end

@@ -13,17 +13,13 @@
     </div>
     <div class="field">
       <%= f.label :cost %><br>
-      <%= f.text_field :cost, class: "calculation" %>
+      <%= f.text_field :cost, :value => (f.object.is_credit == true ? -1 * f.object.cost : f.object.cost), class: "item_cost" %>
     </div>
     <div class="field">
       <%= f.label :quantity %><br>
-      <%= f.number_field :quantity, class: "calculation" %>
+      <%= f.number_field :quantity, class: "item_quantity" %>
     </div>
-    <div class="field">
-      <%= f.label :is_credit %><br>
-      <%= f.check_box :is_credit, class: "creditCalculation" %>
-    </div>
-
+		<%= f.hidden_field :is_credit %>
     <%-# link_to_remove_association is part of the cocoon gem for nested fields %>
     <%= link_to_remove_association "Remove Receipt Item", f, { :name => "receiptItemAssociation" } %>
 </div>

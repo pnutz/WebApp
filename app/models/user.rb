@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :receipts
+	has_many :receipts
   has_many :folders
 
   before_save :ensure_authentication_token
