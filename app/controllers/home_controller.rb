@@ -1,8 +1,9 @@
 class HomeController < ApplicationController
   def index
 	  if user_signed_in?
-			@receipts = Receipt.where(:user_id => current_user.id).where(:folder_id => nil)
-	  	@userFolders = Folder.where(:user_id => current_user.id);
+			@receipts = current_user.receipts.where(:folder_id => nil)
+	  	@userFolders = current_user.folders;
+			@tabs = current_user.folder_types;
 	  end
   end
 end

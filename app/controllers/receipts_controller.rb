@@ -1,4 +1,5 @@
 class ReceiptsController < ApplicationController
+	load_and_authorize_resource
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
 
   # GET /receipts
@@ -66,8 +67,7 @@ class ReceiptsController < ApplicationController
     newReceipt.delete(:vendor_name)
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
 
-    @receipt = Receipt.new(newReceipt)
-    @receipt.user_id = current_user.id
+    @receipt = current_user.receipts.new(newReceipt)
 
     respond_to do |format|
       if @receipt.save

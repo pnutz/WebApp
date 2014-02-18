@@ -1,24 +1,60 @@
+<style type="text/css">
+	ul li{
+		display: inline;
+	}
+</style>
+
 <p>
 	<b><%= link_to 'Add Folder', new_folder_path %> | <%= link_to 'Folder List', folders_path %><br>
-	<%= link_to 'Add Receipt', new_receipt_path %> | <%= link_to 'Receipt List', receipts_path %></b>
+	<%= link_to 'Add Receipt', new_receipt_path %> | <%= link_to 'Receipt List', receipts_path %><br>
+	<%= link_to 'Add Folder Type', new_folder_type_path %> | <%= link_to 'Folder Type List', folder_types_path %></b>
 </p>
 
-<ul>
-<% if (@receipts.count != 0) %>
-	<li>Folder-less Receipts</li>
+<div id="foldertypes">
 	<ul>
-	<% @receipts.each do |receipt| %>
-	
-		<li><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
-	<% end %>
+		<% if (@receipts.count != 0) %>
+			<li><a href="#0">Folder-less Receipts</a></li>
+		<% end %>
+		<% @tabs.each do |tab| %>
+			<li><a href="#<%= tab.id %>">
+				<%= tab.name %>
+			</a></li>
+		<% end %>
 	</ul>
-<% end %>
-<% @userFolders.each do |userFolder| %>
-	<li><%= link_to(userFolder.name, userFolder) %> (<%= link_to 'Add Receipt', new_folder_receipt_path(userFolder) %>)</li>
-		<ul>
-			<% userFolder.receipts.each do |receipt| %>
-				<li><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
+	
+	<% if (@receipts.count != 0) %>
+		<div id="#0">
+			<% @receipts.each do |receipt| %>
+				<p><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></p>
 			<% end %>
+		</div>
+	<% end %>
+	<% @tabs.each do |tab| %>
+		<div id="<%= tab.id %>">
+			<% tab.folders.where(:folder_id => nil).each do |folder| %>
+				<p><%= link_to(folder.name, folder) %> (<%= link_to 'Add Receipt', new_folder_receipt_path(folder) %>)</p>
+			<% end %>
+		</div>
+	<% end %>
+	
+	
+	<!--<ul>
+	<% if (@receipts.count != 0) %>
+		<li>Folder-less Receipts</li>
+		<ul>
+		<% @receipts.each do |receipt| %>
+		
+			<li><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
+		<% end %>
 		</ul>
-<% end %>
-</ul>
+	<% end %>
+	<% @userFolders.each do |userFolder| %>
+		<li><%= link_to(userFolder.name, userFolder) %> (<%= link_to 'Add Receipt', new_folder_receipt_path(userFolder) %>)</li>
+			<ul>
+				<% userFolder.receipts.each do |receipt| %>
+					<li><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
+				<% end %>
+			</ul>
+	<% end %>
+	</ul>-->
+</div>

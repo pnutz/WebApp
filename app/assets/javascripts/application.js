@@ -18,3 +18,4 @@
 //= require_tree .
 //= require cocoon
 //= require jquery.tablesorter.min
+//= require jquery.ui.tabs

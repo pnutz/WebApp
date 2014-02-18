@@ -1,0 +1,2 @@
+module FolderTypesHelper
+end

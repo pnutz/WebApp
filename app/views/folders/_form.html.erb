@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :folder_type_id %><br>
-    <%= f.collection_select :folder_type_id, FolderType.all, :id, :name, :include_blank => true %>
+    <%= f.collection_select :folder_type_id, current_user.folder_types, :id, :name, :include_blank => true %>
   </div>
   <% if current_user.folders.count != 0 %>
     <div class="field">

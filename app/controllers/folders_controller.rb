@@ -1,4 +1,5 @@
 class FoldersController < ApplicationController
+	load_and_authorize_resource
   before_action :set_folder, only: [:show, :edit, :update, :destroy]
 
   # GET /folders
@@ -24,8 +25,7 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
-		@folder = Folder.new(folder_params)
-		@folder.user_id = current_user.id
+		@folder = current_user.folders.new(folder_params)
 
     respond_to do |format|
       if @folder.save

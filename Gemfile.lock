@@ -32,6 +32,7 @@ GEM
     bootstrap-sass (3.0.3.0)
       sass (~> 3.2)
     builder (3.1.4)
+    cancan (1.6.10)
     cocoon (1.2.5)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -155,6 +156,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass
+  cancan
   cocoon
   coffee-rails (~> 4.0.0)
   debugger

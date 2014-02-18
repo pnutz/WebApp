@@ -36,6 +36,9 @@ gem 'timeliness'
 # Use Devise for our user authentication
 gem 'devise'
 
+# Use CanCan for user permissions
+gem 'cancan'
+
 # Use Cocoon for easy-to-handle nested forms
 gem 'cocoon'
 

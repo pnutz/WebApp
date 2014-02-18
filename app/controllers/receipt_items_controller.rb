@@ -1,4 +1,5 @@
 class ReceiptItemsController < ApplicationController
+	load_and_authorize_resource
   before_action :set_receipt_item, only: [:show, :edit, :update, :destroy]
 
   # GET /receipt_items

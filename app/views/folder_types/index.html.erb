@@ -1,0 +1,27 @@
+<h1>Listing folder_types</h1>
+
+<table>
+  <thead>
+    <tr>
+			<th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @folder_types.each do |folder_type| %>
+      <tr>
+				<td><%= folder_type.name %></td>
+        <td><%= link_to 'Show', folder_type %></td>
+        <td><%= link_to 'Edit', edit_folder_type_path(folder_type) %></td>
+        <td><%= link_to 'Destroy', folder_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Folder type', new_folder_type_path %>

@@ -1,4 +1,5 @@
 class PurchaseTypesController < ApplicationController
+	load_and_authorize_resource
   before_action :set_purchase_type, only: [:show, :edit, :update, :destroy]
 
   # GET /purchase_types
@@ -69,6 +70,6 @@ class PurchaseTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_type_params
-      params.require(:purchase_type).permit(:id, :name)
+      params.require(:purchase_type).permit(:name)
     end
 end

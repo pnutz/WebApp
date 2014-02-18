@@ -1,5 +1,9 @@
 WebApp::Application.routes.draw do
 
+  resources :folder_types
+
+  resources :purchase_types
+
   resources :receipt_items
 	
   namespace :api do

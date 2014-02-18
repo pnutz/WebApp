@@ -41,7 +41,3 @@ end
 
 Currency.create(:code => "CAD", :description => "Canadian Dollars")
 Currency.create(:code => "USD", :description => "US Dollars")
-
-["Business", "Personal"].each do |ft|
-  FolderType.find_or_create_by_name(ft)
-end
