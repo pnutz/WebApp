@@ -6,7 +6,8 @@ class Ability
 		if user.is? :admin
 			can :manage, :all
 		else
-			can :manage, [Receipt, Folder, FolderType]
+			can :read, :all
+			can :crud, [Receipt, Folder, FolderType]
 		end
   end
 end
