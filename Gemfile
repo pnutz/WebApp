@@ -27,6 +27,12 @@ gem 'jquery-rails'
 # JQuery UI
 gem 'jquery-ui-rails'
 
+# jQuery Migrate (jquery-rails version has removed older functionality, required for jsTree)
+gem 'jquery-migrate-rails'
+
+# jsTree
+gem 'jstree-rails'
+
 # Use jquery as the JavaScript library
 gem 'rspec-rails'
 

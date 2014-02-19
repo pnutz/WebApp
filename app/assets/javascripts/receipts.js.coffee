@@ -40,7 +40,6 @@ $(document).on 'ready page:load', ->
 			receiptItemCount--
 			itemFullName = $(this).prev().attr("name")
 			updateTotal itemFullName.substring(34, itemFullName.length - 11)
-			console.log receiptItemCount
 			if receiptItemCount is 0
 				$("#receipt_total").prop "readonly", false
 				$("#receipt_total").removeClass "input-disabled"

@@ -19,3 +19,5 @@
 //= require cocoon
 //= require jquery.tablesorter.min
 //= require jquery.ui.tabs
+//= require jquery-migrate-min
+//= require jstree
