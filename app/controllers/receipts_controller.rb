@@ -1,11 +1,12 @@
 class ReceiptsController < ApplicationController
-  load_and_authorize_resource skip_load_resource only: [:create]
+  load_and_authorize_resource
+	skip_load_resource only: [:create]
 	before_action :set_receipt, only: [:show, :edit, :update, :destroy]
 	
   # GET /receipts
   # GET /receipts.json
   def index
-  @receipts = current_user.receipts
+		@receipts = current_user.receipts
   end
 
   # GET /receipts/1

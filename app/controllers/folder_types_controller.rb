@@ -1,5 +1,6 @@
 class FolderTypesController < ApplicationController
-	load_and_authorize_resource skip_load_resource only: [:create]
+	load_and_authorize_resource
+	skip_load_resource only: [:create]
   before_action :set_folder_type, only: [:show, :edit, :update, :destroy]
 
   # GET /folder_types
