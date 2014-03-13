@@ -78,4 +78,4 @@ gem 'bootstrap-sass'
 # gem 'capistrano', group: :development
 
 # Use debugger
-gem 'debugger', group: [:development, :test]
+gem 'debugger', '~> 1.6.6', group: [:development, :test]
