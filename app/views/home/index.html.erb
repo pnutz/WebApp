@@ -23,7 +23,9 @@
 		<div id="0" class="treeViewDiv">
 			<ul>
 				<% @receipts.each do |receipt| %>
-					<li class='receipt' id='receipt-<%= receipt.id %>' data-jstree='{"icon":"assets/receipt_icon.png"}'><%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y"), receipt) %></li>
+          <li class='receipt' id='receipt-<%= receipt.id %>' data-jstree='{"icon":"assets/receipt_icon.png"}'>
+          <%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y") + "- Total: #{receipt.total}", receipt) %>
+          </li>
 				<% end %>
 			</ul>
 		</div>
