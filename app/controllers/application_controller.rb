@@ -21,18 +21,26 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_user_from_token!
+    # No token in query string so just return
+    if !params[:token].presence
+      return
+    end
+
     user_email = params[:email].presence
     user = user_email && User.find_by_email(user_email)
-    if user 
+    if user
+      #Check if token expired
+      if user.expire_date < DateTime.now
+        render :json => { alert: 'Error'}, :status => :forbidden
+      end
+
       if Devise.secure_compare(user.authentication_token, params[:token])
         sign_in user, store: false
         return
       end
-
-      # only come down here if first authentication fails11
-      if ENV_VARIABLES[:useTestToken] && params[:token] == "TestTokenMothafucka"
-        sign_in user, store: false
-      end
+    else
+      # Return bad request response if user is not found
+      render :json => { alert: 'Bad Request'}, :status => :bad_request
     end
   end
 end

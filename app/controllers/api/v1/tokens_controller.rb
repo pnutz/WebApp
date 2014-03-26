@@ -25,14 +25,18 @@ class Api::V1::TokensController  < ApplicationController
       render :status=>401, :json=>{:message=>"Invalid email or password."}
       return
     end
-    # http://rdoc.info/github/plataformatec/devise/master/Devise/Models/TokenAuthenticatable
-    #@user.ensure_authentication_token!
                        
     if not @user.valid_password?(password)
-      logger.info("User #{email} failed signin, password \"#{password}\" is invalid")
+      logger.info("User #{email} failed signin, password is invalid")
       render :status=>401, :json=>{:message=>"Invalid email or password."}
     else
       logger.info("User #{email}.")
+      # Generate new authentication token on sign in
+      @user.authentication_token = generate_authentication_token
+      # Generate new expiry date
+      @user.expire_date = DateTime.now + 2.weeks 
+      @user.save
+      puts "authentication token"
       render :status=>200, :json=>{:token=>@user.authentication_token, :user=>@user.id}
     end
   end
@@ -47,4 +51,16 @@ class Api::V1::TokensController  < ApplicationController
       render :status=>200, :json=>{:token=>params[:id]}
     end
   end
+
+  private 
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
+
+
+
 end
