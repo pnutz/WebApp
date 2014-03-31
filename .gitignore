@@ -24,3 +24,9 @@ doc/
 .DS_Store
 .idea
 .secret
+
+#ignore omniauth authentication
+config/initializers/omniauth.rb
+
+# Weird binary file
+WebApp

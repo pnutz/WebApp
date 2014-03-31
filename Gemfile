@@ -78,3 +78,7 @@ gem 'bootstrap-sass'
 
 # Use debugger
 gem 'debugger', '1.6.6', group: [:development, :test]
+
+# Use Omniauth gem for provider tokens
+gem 'omniauth', '~> 1.0'
+gem 'omniauth-facebook'
