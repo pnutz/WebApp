@@ -77,6 +77,4 @@ WebApp::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-
-  ENV_VARIABLES = {:useTestToken => false}
 end

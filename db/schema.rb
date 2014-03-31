@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140326023409) do
+ActiveRecord::Schema.define(version: 20140327054339) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -149,8 +149,12 @@ ActiveRecord::Schema.define(version: 20140326023409) do
     t.string   "authentication_token"
     t.string   "role",                   default: "user"
     t.datetime "expire_date",            default: '2000-01-01 00:00:00'
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
