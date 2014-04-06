@@ -1,5 +1,6 @@
 WebApp::Application.routes.draw do
 
+  devise_for :users, :controllers => {:omniauth_callbacks => "omniauth_callbacks"}
   resources :folder_types
 
   resources :purchase_types
@@ -26,7 +27,10 @@ WebApp::Application.routes.draw do
 
   get "users/index"
   get "home/index"
-  devise_for :users
+  # link to omniauth
+  #get '/auth/:provider/callback', :to => 'sessions#create'
+  #get '/auth/failure', :to => 'sessions#failure'
+
   
   # makes our default page the 'index' endpoint in the HomeController
   root to: 'home#index'
