@@ -14,7 +14,7 @@ WebApp::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -29,4 +29,27 @@ WebApp::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.action_mailer.delivery_method = :smtp 
+
+  # mailer config for gmail
+ # config.action_mailer.smtp_settings = {
+  #  address: "smtp.gmail.com",
+  #  port: 587,
+  #  domain: ENV["GMAIL_DOMAIN"],
+  #  authentication: "plain",
+  #  enable_starttls_auto: true,
+  #  user_name: ENV["GMAIL_USERNAME"],
+  #  password: ENV["GMAIL_PASSWORD"]
+  #}
+
+  # development settings for using mailcatcher gem
+  config.action_mailer.smtp_settings = {
+    address: "localhost",
+    port:    1025,
+    domain:  'lvh.me:3000'
+  }
+
+  ENV["TEST_ENV_AUTO_CONFIRM"] = "true"
+
 end

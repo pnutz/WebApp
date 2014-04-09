@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable
+         :omniauthable, :confirmable
 
-	after_create :initialize_folder
+	after_create :initialize_folder, :auto_confirm
 				 
 	has_many :receipts
   has_many :folders
@@ -37,4 +37,14 @@ class User < ActiveRecord::Base
 		self.folder_types.create(:name => "Your first tab")
 	end
 	
+  def auto_confirm
+    puts "auto confirming"
+    # auto confirm in development so we don't have to confirm email addresses
+    if Rails.env.development?
+      puts "Setting #{DateTime.now}"
+      self.confirmed_at = DateTime.now
+      self.save
+    end
+	end
+
 end
