@@ -1,4 +1,5 @@
-class Api::V1::TokensController  < ApplicationController
+require 'facebook_api_module'
+class Api::V1::TokensController < ApplicationController
   #Don't have to authenticate user when accessing tokencontroller
   skip_before_filter :verify_authenticity_token, :authenticate_user!
   respond_to :json
@@ -7,17 +8,47 @@ class Api::V1::TokensController  < ApplicationController
   def create
     email = params[:email]
     password = params[:password]
+    accessToken = params[:access_token]
     if request.format != :json
       render :status=>406, :json=>{:message=>"The request must be json"}
       return
     end
-    
-    if email.nil? or password.nil?
+    if email.nil?
       render :status=>400,
-             :json=>{:message=>"The request must contain the user email and password."}
+             :json=>{:message=>"The request must contain the user email"}
       return
     end
-     
+    # make sure we have a password or an access token
+    if password.nil? 
+      # Check if we have access token
+      if accessToken.nil?
+        # we only want to send error response for missing password
+        render :status=>400,
+               :json=>{:message=>"The request must contain the user password"}
+      else
+        FacebookApiModule::IsExtensionTokenValid(accessToken);
+      end
+      return
+    end
+
+    #regular email password authentication
+    EmailPasswordLogin(email, password);
+  end
+
+  def destroy
+    @user=User.find_by_authentication_token(params[:id])
+    if @user.nil?
+      logger.info("Token not found.")
+      render :status=>404, :json=>{:message=>"Invalid token."}
+    else
+      @user.reset_authentication_token!
+      render :status=>200, :json=>{:token=>params[:id]}
+    end
+  end
+
+  private 
+
+  def EmailPasswordLogin(email, password)
     @user=User.find_by_email(email.downcase)
       
     if @user.nil?
@@ -36,23 +67,9 @@ class Api::V1::TokensController  < ApplicationController
       # Generate new expiry date
       @user.expire_date = DateTime.now + 2.weeks 
       @user.save
-      puts "authentication token"
       render :status=>200, :json=>{:token=>@user.authentication_token, :user=>@user.id}
     end
   end
-   
-  def destroy
-    @user=User.find_by_authentication_token(params[:id])
-    if @user.nil?
-      logger.info("Token not found.")
-      render :status=>404, :json=>{:message=>"Invalid token."}
-    else
-      @user.reset_authentication_token!
-      render :status=>200, :json=>{:token=>params[:id]}
-    end
-  end
-
-  private 
 
   def generate_authentication_token
     loop do
