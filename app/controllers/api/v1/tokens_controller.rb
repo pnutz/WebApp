@@ -8,11 +8,14 @@ class Api::V1::TokensController < ApplicationController
   def create
     email = params[:email]
     password = params[:password]
-    accessToken = params[:access_token]
+    fbAccessToken = params[:fbAccessToken]
+    # if format is not json
     if request.format != :json
       render :status=>406, :json=>{:message=>"The request must be json"}
       return
     end
+
+    # if email does not exist 
     if email.nil?
       render :status=>400,
              :json=>{:message=>"The request must contain the user email"}
@@ -21,18 +24,35 @@ class Api::V1::TokensController < ApplicationController
     # make sure we have a password or an access token
     if password.nil? 
       # Check if we have access token
-      if accessToken.nil?
+      if fbAccessToken.nil?
         # we only want to send error response for missing password
         render :status=>400,
                :json=>{:message=>"The request must contain the user password"}
       else
-        FacebookApiModule::IsExtensionTokenValid(accessToken);
+        # Check that the access token is for our application
+        fbAppResponse = FacebookApiModule::get_app_info(fbAccessToken);
+        # Get the application token
+        fbUserResponse = FacebookApiModule::get_user_info(fbAccessToken);
+        if fbUserResponse.code == "200"
+          fbUserInfo = JSON.parse(fbUserResponse.body)
+          # When logging in through facebook we should use
+          # the facebook user id to locate the user
+          puts "fbUserinfo is "
+          puts fbUserInfo["id"]
+          @auth=Authorization.find_by_uid(fbUserInfo["id"]);
+          puts "Internal id is"
+          puts @auth.internal_id
+          @user=User.find(@auth.internal_id);
+          render :status=>200,
+                 :json=>{:token => @user.authentication_token, :user => @user.id, :message=>"Fb OAuth Success"}
+        end
       end
       return
+    else
+      # regular email password authentication
+      @user=User.find_by_email(email.downcase)
+      email_password_login(email, password);
     end
-
-    #regular email password authentication
-    EmailPasswordLogin(email, password);
   end
 
   def destroy
@@ -48,7 +68,7 @@ class Api::V1::TokensController < ApplicationController
 
   private 
 
-  def EmailPasswordLogin(email, password)
+  def email_password_login(email, password)
     @user=User.find_by_email(email.downcase)
       
     if @user.nil?
