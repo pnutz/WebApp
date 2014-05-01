@@ -7,7 +7,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     puts request.env["omniauth.auth"]["uid"]
     puts "Facebook provider" 
     puts request.env["omniauth.auth"]["uid"]
-    @user = Authorization.createOrFindFromFacebookOauth(request.env["omniauth.auth"])
+#    @user = Authorization.createOrFindFromFacebookOauth(request.env["omniauth.auth"])
+    @user = Authorization.createOrFindFromFacebookOauth(
+      request.env["omniauth.auth"].uid,
+      request.env["omniauth.auth"].info.email)
     if @user.persisted?
       puts "user data persisted"
       sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated

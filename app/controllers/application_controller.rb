@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_user_from_token!
+    puts "authenticating user"
     # No token in query string so just return
     if !params[:token].presence
       return
@@ -31,7 +32,7 @@ class ApplicationController < ActionController::Base
     if user
       #Check if token expired
       if user.expire_date < DateTime.now
-        render :json => { alert: 'Error'}, :status => :forbidden
+        render :json => { alert: 'Expired Token'}, :status => :forbidden
       end
 
       if Devise.secure_compare(user.authentication_token, params[:token])

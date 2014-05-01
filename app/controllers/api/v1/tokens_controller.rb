@@ -39,10 +39,15 @@ class Api::V1::TokensController < ApplicationController
           # the facebook user id to locate the user
           puts "fbUserinfo is "
           puts fbUserInfo["id"]
-          @auth=Authorization.find_by_uid(fbUserInfo["id"]);
+          @user = Authorization.createOrFindFromFacebookOauth(email, fbUserInfo["id"])
+          # try to find the user in the authorization table
           puts "Internal id is"
-          puts @auth.internal_id
-          @user=User.find(@auth.internal_id);
+          logger.info("User #{email}.")
+          # Generate new authentication token on sign in
+          @user.authentication_token = generate_authentication_token
+          # Generate new expiry date
+          @user.expire_date = DateTime.now + 2.weeks 
+          @user.save
           render :status=>200,
                  :json=>{:token => @user.authentication_token, :user => @user.id, :message=>"Fb OAuth Success"}
         end
