@@ -1,7 +1,7 @@
 class Authorization < ActiveRecord::Base
 
   #Log in using facebook Oauth
-  def self.createOrFindFromFacebookOauth(email, uid)
+  def self.createOrFindFromFacebookOauth(uid, email)
     #search the table for matching provider and uid
     authDict = { :provider => "facebook",
                  :uid => uid }
