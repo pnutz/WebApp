@@ -2,7 +2,7 @@ class ReceiptsController < ApplicationController
   load_and_authorize_resource
 	skip_load_resource only: [:create]
 	before_action :set_receipt, only: [:show, :edit, :update, :destroy]
-	
+
   # GET /receipts
   # GET /receipts.json
   def index
@@ -28,9 +28,13 @@ class ReceiptsController < ApplicationController
   # POST /receipts.json
   def create
     newReceipt = receipt_params
-    
-    newReceipt[:date] = Timeliness.parse(receipt_params[:date], :format => 'mm/dd/yyyy')
-    
+
+    if (newReceipt[:date] == nil && newReceipt[:numeric_date] != nil)
+      newReceipt[:date] = Time.at(newReceipt[:numeric_date].to_i)
+    end
+
+    newReceipt[:date] = Timeliness.parse(newReceipt[:date], :format => 'mm/dd/yyyy')
+
     if (newReceipt[:receipt_items_attributes] != nil)
       newReceipt[:receipt_items_attributes].values.each do |item|
         # only look at receipt items that will be created
@@ -41,7 +45,7 @@ class ReceiptsController < ApplicationController
             type = ItemType.create(:name => item[:itemtype])
           end
           item[:item_type_id] = type.id
-					
+
 					# set all costs to positive and define is_credit
 					int_cost = item[:cost].to_i
 					if (int_cost >= 0)
@@ -53,7 +57,7 @@ class ReceiptsController < ApplicationController
         end
       end
     end
-    
+
     if (newReceipt[:vendor_name] != "")
       # try to find existing vendor
       vendor = Vendor.find_by name: newReceipt[:vendor_name]
@@ -66,6 +70,7 @@ class ReceiptsController < ApplicationController
 
     # remove vendor_name and nested itemtype key before creating receipt, since it is not in model
     newReceipt.delete(:vendor_name)
+    newReceipt.delete(:numeric_date)
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
 
     @receipt = current_user.receipts.new(newReceipt)
@@ -87,9 +92,13 @@ class ReceiptsController < ApplicationController
     respond_to do |format|
 
       updateReceipt = receipt_params
-      
-      updateReceipt[:date] = Timeliness.parse(receipt_params[:date], :format => 'mm/dd/yyyy')
-      
+
+      if (updateReceipt[:date] == nil && updateReceipt[:numeric_date] != nil)
+        updateReceipt[:date] = Time.at(updateReceipt[:numeric_date].to_i)
+      end
+
+      updateReceipt[:date] = Timeliness.parse(updateReceipt[:date], :format => 'mm/dd/yyyy')
+
       if (updateReceipt[:receipt_items_attributes] != nil)
         updateReceipt[:receipt_items_attributes].values.each do |item|
           # only look at receipt items that will be created
@@ -100,7 +109,7 @@ class ReceiptsController < ApplicationController
               type = ItemType.create(:name => item[:itemtype])
             end
             item[:item_type_id] = type.id
-						
+
 						# set all costs to positive and define is_credit
 						int_cost = item[:cost].to_i
 						if (int_cost >= 0)
@@ -112,17 +121,18 @@ class ReceiptsController < ApplicationController
           end
         end
       end
-        
+
       # try to find existing vendor
       vendor = Vendor.find_by name: updateReceipt[:vendor_name]
       # if we don't have a vendor by this name then create it
       if (vendor == nil)
-      vendor = Vendor.create(name: updateReceipt[:vendor_name])
+        vendor = Vendor.create(name: updateReceipt[:vendor_name])
       end
       updateReceipt[:vendor_id] = vendor.id
 
       # remove vendor_name and nested itemtype key before creating receipt, since it is not in model
       updateReceipt.delete(:vendor_name)
+      updateReceipt.delete(:numeric_date)
       updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
 
       if @receipt.update(updateReceipt)
@@ -153,7 +163,7 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :vendor_name, :currency_id, :user_id, receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ])
+      params.require(:receipt).permit(:date, :numeric_date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :vendor_name, :currency_id, :user_id, receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ])
     end
 end
 
