@@ -77,8 +77,11 @@ gem 'bootstrap-sass'
 # gem 'capistrano', group: :development
 
 # Use debugger
-gem 'debugger', '1.6.6', group: [:development, :test]
+#gem 'debugger', '1.6.9', group: [:development, :test]
 
 # Use Omniauth gem for provider tokens
 gem 'omniauth', '~> 1.0'
 gem 'omniauth-facebook'
+
+# faker for generating data
+gem 'faker'

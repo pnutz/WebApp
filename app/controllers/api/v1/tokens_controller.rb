@@ -39,7 +39,7 @@ class Api::V1::TokensController < ApplicationController
           # the facebook user id to locate the user
           puts "fbUserinfo is "
           puts fbUserInfo["id"]
-          @user = Authorization.createOrFindFromFacebookOauth(email, fbUserInfo["id"])
+          @user = Authorization.createOrFindFromFacebookOauth(fbUserInfo["id"], email)
           # try to find the user in the authorization table
           puts "Internal id is"
           logger.info("User #{email}.")

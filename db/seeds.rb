@@ -10,7 +10,7 @@
   PurchaseType.find_or_create_by_name(pt)
 end
 
-["Canada", "USA"].each do |country|
+["Canada", "USA", "Japan", "England", "Turkey", "Sweden", "Germany", "India"].each do |country|
   Country.find_or_create_by_name(country)
 end
 
