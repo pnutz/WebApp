@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409034032) do
+ActiveRecord::Schema.define(version: 20140718070758) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -140,6 +140,17 @@ ActiveRecord::Schema.define(version: 20140409034032) do
   add_index "receipts", ["purchase_type_id"], name: "index_receipts_on_purchase_type_id"
   add_index "receipts", ["user_id"], name: "index_receipts_on_user_id"
   add_index "receipts", ["vendor_id"], name: "index_receipts_on_vendor_id"
+
+  create_table "tags", force: true do |t|
+    t.string "name"
+  end
+
+  create_table "tags_receipts", id: false, force: true do |t|
+    t.integer "tag_id"
+    t.integer "receipt_id"
+  end
+
+  add_index "tags_receipts", ["tag_id", "receipt_id"], name: "index_tags_receipts_on_tag_id_and_receipt_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",                    null: false

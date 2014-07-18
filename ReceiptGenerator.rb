@@ -1,18 +1,30 @@
+Folder.delete_all
+Receipt.delete_all
 if Vendor.all.size < 50
   50.times do
     Vendor.create(:name => Faker::Name.name)
   end
 end
 
-# add non sub folders
-if Folder.all.size < 7 
-  50.times do
-    Vendor.create(:name => Faker::Name.name)
-  end
-end
 
 # add receipts to users
 User.all.each do |user|
+  # add non sub folders
+  5.times do
+    Folder.create(:name => Faker::Name.name, 
+                  :folder_type_id => 5,
+                  :folder_id => nil,
+                  :description => "fdfas",
+                  :user_id => user.id)
+  end
+  5.times do
+    Folder.create(:name => Faker::Name.name, 
+                  :folder_type_id => 5,
+                  :folder_id => Folder.where(:user_id => user.id, :folder_id => nil).sample.id,
+                  :description => "sub folderrrrr",
+                  :user_id => user.id)
+  end
+
   50.times do
     receipt = Receipt.create()
     receipt.total = Faker::Number.decimal(4)
