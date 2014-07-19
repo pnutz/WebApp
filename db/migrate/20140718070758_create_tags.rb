@@ -4,11 +4,11 @@ class CreateTags < ActiveRecord::Migration
       t.string :name
     end
 
-    create_table :tags_receipts, id: false do |t|
+    create_table :receipts_tags, id: false do |t|
       t.belongs_to :tag
       t.belongs_to :receipt
     end
 
-    add_index :tags_receipts, [:tag_id, :receipt_id]
+    add_index :receipts_tags, [:receipt_id, :tag_id]
   end
 end

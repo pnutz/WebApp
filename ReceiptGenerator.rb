@@ -6,6 +6,16 @@ if Vendor.all.size < 50
   end
 end
 
+["CAD", "USD", "RMB", "EUR"].each do |money|
+  currency = Currency.create(:code => money);
+  currency.save();
+end
+
+["Auto", "Food", "Entertainment", "Sports"].each do |purchase_type|
+  purchase = PurchaseType.create(:name => purchase_type);
+  purchase.save()
+end
+
 
 # add receipts to users
 User.all.each do |user|
