@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Is snapshot:</strong>
+  <%= @document.is_snapshot %>
+</p>
+
+<p>
+  <strong>Receipt:</strong>
+  <%= @document.receipt %>
+</p>
+
+<%= link_to 'Edit', edit_document_path(@document) %> |
+<%= link_to 'Back', documents_path %>

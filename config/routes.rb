@@ -1,5 +1,7 @@
 WebApp::Application.routes.draw do
 
+  resources :documents
+
   devise_for :users, :controllers => {:omniauth_callbacks => "omniauth_callbacks"}
   resources :folder_types
 

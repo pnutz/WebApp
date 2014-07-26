@@ -30,7 +30,7 @@ WebApp::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.action_mailer.delivery_method = :smtp 
+  config.action_mailer.delivery_method = :smtp
 
   # mailer config for gmail
  # config.action_mailer.smtp_settings = {
@@ -51,5 +51,8 @@ WebApp::Application.configure do
   }
 
   ENV["TEST_ENV_AUTO_CONFIRM"] = "true"
+
+
+  Paperclip.options[:command_path] = "C:/Program Files/ImageMagick-6.8.9-Q16"
 
 end

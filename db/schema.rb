@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140718070758) do
+ActiveRecord::Schema.define(version: 20140724201754) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -48,6 +48,19 @@ ActiveRecord::Schema.define(version: 20140718070758) do
     t.string   "description"
     t.string   "code"
   end
+
+  create_table "documents", force: true do |t|
+    t.boolean  "is_snapshot"
+    t.integer  "receipt_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+  end
+
+  add_index "documents", ["receipt_id"], name: "index_documents_on_receipt_id"
 
   create_table "extensions", force: true do |t|
     t.string   "name"

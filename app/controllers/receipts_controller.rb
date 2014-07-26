@@ -58,6 +58,16 @@ class ReceiptsController < ApplicationController
       end
     end
 
+    if (newReceipt[:documents_attributes] != nil)
+      newReceipt[:documents_attributes].values.each do |document|
+        if (document[:is_snapshot])
+          document[:file] = Document.decode_base64_image(document[:data])
+          document[:file_file_name] = "snapshot.jpg"
+          # else - add uploads when implementation required
+        end
+      end
+    end
+
     if (newReceipt[:vendor_name] != "")
       # try to find existing vendor
       vendor = Vendor.find_by name: newReceipt[:vendor_name]
@@ -68,10 +78,11 @@ class ReceiptsController < ApplicationController
       newReceipt[:vendor_id] = vendor.id
     end
 
-    # remove vendor_name and nested itemtype key before creating receipt, since it is not in model
+    # remove vendor_name, numeric_date, nested itemtype key, and nested data key before creating receipt, since it is not in model
     newReceipt.delete(:vendor_name)
     newReceipt.delete(:numeric_date)
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
+    newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:data):y)] }]:v)] }]
 
     @receipt = current_user.receipts.new(newReceipt)
 
@@ -130,10 +141,11 @@ class ReceiptsController < ApplicationController
       end
       updateReceipt[:vendor_id] = vendor.id
 
-      # remove vendor_name and nested itemtype key before creating receipt, since it is not in model
+      # remove vendor_name, numeric_date, nested itemtype key, and nested data key before creating receipt, since it is not in model
       updateReceipt.delete(:vendor_name)
       updateReceipt.delete(:numeric_date)
       updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
+      updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:data):y)] }]:v)] }]
 
       if @receipt.update(updateReceipt)
         format.html { redirect_to @receipt, notice: 'Receipt was successfully updated.' }
@@ -163,7 +175,9 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:date, :numeric_date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :vendor_name, :currency_id, :user_id, receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ])
+      params.require(:receipt).permit(:date, :numeric_date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :vendor_name, :currency_id, :user_id,
+        receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ],
+        documents_attributes: [ :id, :is_snapshot, :data ])
     end
 end
 
