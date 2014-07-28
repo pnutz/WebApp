@@ -4,7 +4,7 @@ class CreateFolders < ActiveRecord::Migration
       t.string :name, :null => false
       t.text :description 
       t.references :user, index: true, :null => false 
-      t.references :folder_type, index: true, :null => false
+      t.references :folder_type, index: true, :null => true
       t.references :folder, index: true
 
       t.timestamps
