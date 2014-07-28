@@ -24,7 +24,11 @@
       <tr>
         <td><%= folder.name %></td>
         <td><%= folder.description %></td>
-        <td><%= folder.folder_type.name %></td>
+        <td>
+          <% if (folder.folder_type != nil) %>
+             <%= folder.folder_type.name %>
+          <% end %>
+        </td>
         <td>
           <% if (folder.folder != nil) %>
             <%= folder.folder.name %>
