@@ -1,5 +1,5 @@
 <%= form_for(@receipt) do |f| %>
-	
+
   <% if @receipt.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@receipt.errors.count, "error") %> prohibited this receipt from being saved:</h2>
@@ -58,12 +58,12 @@
   </div>
 
   <h2>Receipt Items</h2>
-	
+
   <div class="field">
     <%= f.label :total %><br>
     $ <%= f.text_field :total, :value => (@receipt.total == nil) ? 0 : number_with_precision(@receipt.total, :precision => 2) %>
   </div>
-	
+
   <div id="items">
     <%= f.fields_for :receipt_items do |item| %>
       <%= render "receipt_item_fields", :f => item %>

@@ -85,3 +85,6 @@ gem 'omniauth-facebook'
 
 # faker for generating data
 gem 'faker'
+
+# paperclip for file management
+gem 'paperclip'
