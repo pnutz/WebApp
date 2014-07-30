@@ -25,15 +25,17 @@
 				<% @receipts.each do |receipt| %>
           <li class='receipt' id='receipt-<%= receipt.id %>' data-jstree='{"icon":"assets/receipt_icon.png"}'>
           <%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y") + "- Total: #{receipt.total}", receipt) %>
+
           <p>
             <% if (receipt.documents != nil) %>
               <% receipt.documents.each do |document| %>
-                <%= image_tag document.file.url %>
+                <%= image_tag document.file.url(:thumb) %>
               <% end %>
             <% end %>
           </p>
+          <% end %>
           </li>
-				<% end %>
+
 			</ul>
 		</div>
 	<% end %>

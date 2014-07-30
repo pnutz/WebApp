@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724201754) do
+ActiveRecord::Schema.define(version: 20140730004739) do
 
   create_table "addresses", force: true do |t|
     t.text     "street_address"
@@ -58,9 +58,11 @@ ActiveRecord::Schema.define(version: 20140724201754) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+    t.integer  "user_id"
   end
 
   add_index "documents", ["receipt_id"], name: "index_documents_on_receipt_id"
+  add_index "documents", ["user_id"], name: "index_documents_on_user_id"
 
   create_table "extensions", force: true do |t|
     t.string   "name"
@@ -79,7 +81,7 @@ ActiveRecord::Schema.define(version: 20140724201754) do
     t.string   "name",           null: false
     t.text     "description"
     t.integer  "user_id",        null: false
-    t.integer  "folder_type_id", null: false
+    t.integer  "folder_type_id"
     t.integer  "folder_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -132,6 +134,13 @@ ActiveRecord::Schema.define(version: 20140724201754) do
 
   add_index "receipt_items", ["item_type_id"], name: "index_receipt_items_on_item_type_id"
   add_index "receipt_items", ["receipt_id"], name: "index_receipt_items_on_receipt_id"
+
+  create_table "receipt_items_tags", id: false, force: true do |t|
+    t.integer "receipt_items_id"
+    t.integer "tag_id"
+  end
+
+  add_index "receipt_items_tags", ["receipt_items_id", "tag_id"], name: "index_receipt_items_tags_on_receipt_items_id_and_tag_id"
 
   create_table "receipts", force: true do |t|
     t.decimal  "total"

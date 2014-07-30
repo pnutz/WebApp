@@ -1,5 +1,6 @@
 class Document < ActiveRecord::Base
   belongs_to :receipt
+  belongs_to :user
 
   Paperclip.interpolates :receipt_id_partition do |attachment, style|
     case id = attachment.instance.receipt_id
@@ -27,9 +28,10 @@ class Document < ActiveRecord::Base
   end
 
   has_attached_file :file,
-  #:styles => { :thumb => "100x100>" },
-  # url to image from client (what client sees) - /receipts/1/snapshot/thumbnail/snapshot.jpeg
-  :url => "/receipts/:receipt_id/:is_snapshot/:style/:filename",
+  # styles: original, thumb
+  :styles => { :thumb => "100x100>" },
+  # url to image from client (what client sees) - /documents/1/thumb
+  :url => "/:class/:id?style=:style",
   # location of image on file system - outside rails directory (documents)
   :path => "../:class/:receipt_id_partition/:is_snapshot/:style/:filename"
 

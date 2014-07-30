@@ -6,7 +6,7 @@ class ReceiptsController < ApplicationController
   # GET /receipts
   # GET /receipts.json
   def index
-		@receipts = current_user.receipts
+    @receipts = current_user.receipts
   end
 
   # GET /receipts/1
@@ -63,6 +63,7 @@ class ReceiptsController < ApplicationController
         if (document[:is_snapshot])
           document[:file] = Document.decode_base64_image(document[:data])
           document[:file_file_name] = "snapshot.jpg"
+          document[:user_id] = newReceipt[:user_id]
           # else - add uploads when implementation required
         end
       end
