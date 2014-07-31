@@ -6,6 +6,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
+    # use index.jbuilder?
     is_snapshot = params[:is_snapshot]
     @documents = {}
 
