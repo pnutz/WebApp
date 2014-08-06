@@ -29,7 +29,7 @@ class Document < ActiveRecord::Base
 
   has_attached_file :file,
   # styles: original, thumb
-  :styles => { :thumb => "100x100>" },
+  :styles => { :thumb => "200x200>" },
   # url to image from client (what client sees) - /documents/1/thumb
   :url => "/:class/:id?style=:style",
   # location of image on file system - outside rails directory (documents)

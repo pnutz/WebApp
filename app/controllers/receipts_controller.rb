@@ -62,6 +62,7 @@ class ReceiptsController < ApplicationController
       newReceipt[:documents_attributes].values.each do |document|
         if (document[:is_snapshot])
           document[:file] = Document.decode_base64_image(document[:data])
+          # convert png to jpg through filename
           document[:file_file_name] = "snapshot.jpg"
           document[:user_id] = newReceipt[:user_id]
           # else - add uploads when implementation required
