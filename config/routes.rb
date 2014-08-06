@@ -32,6 +32,9 @@ WebApp::Application.routes.draw do
   # link to omniauth
   #get '/auth/:provider/callback', :to => 'sessions#create'
   #get '/auth/failure', :to => 'sessions#failure'
+  # Gets the tags for either a receipt, receipt_item or user
+  get "tags/:type/:id", :to => 'tags#index'
+  puts "tags/:type/:id", :to => 'tags#create'
 
   
   # makes our default page the 'index' endpoint in the HomeController

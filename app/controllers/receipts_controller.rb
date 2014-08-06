@@ -78,17 +78,30 @@ class ReceiptsController < ApplicationController
       end
       newReceipt[:vendor_id] = vendor.id
     end
+    receiptTags = nil
+    # if the receipt has a list of tag names
+    if (newReceipt[:tag_names] != nil)
+      receiptTags = newReceipt[:tag_names]
+    end
 
     # remove vendor_name, numeric_date, nested itemtype key, and nested data key before creating receipt, since it is not in model
     newReceipt.delete(:vendor_name)
     newReceipt.delete(:numeric_date)
+    newReceipt.delete(:tag_names)
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:data):y)] }]:v)] }]
 
     @receipt = current_user.receipts.new(newReceipt)
-
     respond_to do |format|
       if @receipt.save
+        # if the receipt has tag names then associate them
+        if (receiptTags != nil)
+          receiptTags.each do |name|
+            newTag = Tag.find_or_create_by(name: name)
+            @receipt.tags<<newTag
+          end
+        end
+
         format.html { redirect_to @receipt, notice: 'Receipt was successfully created.' }
         format.json { render action: 'show', status: :created, location: @receipt }
       else
@@ -176,9 +189,21 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:date, :numeric_date, :total, :transaction_number, :purchase_type_id, :title, :folder_id, :note, :vendor_id, :vendor_name, :currency_id, :user_id,
-        receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ],
-        documents_attributes: [ :id, :is_snapshot, :data ])
+      params.require(:receipt).permit(:date, 
+                                      :numeric_date, 
+                                      :total, 
+                                      :transaction_number, 
+                                      :purchase_type_id, 
+                                      :title, 
+                                      :folder_id, 
+                                      :note, 
+                                      :vendor_id, 
+                                      :vendor_name, 
+                                      :currency_id, 
+                                      :user_id,
+                                      tag_names: [],
+                                      receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ],
+                                      documents_attributes: [ :id, :is_snapshot, :data ])
     end
 end
 
