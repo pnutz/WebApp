@@ -12,6 +12,7 @@ class ReceiptsController < ApplicationController
   # GET /receipts/1
   # GET /receipts/1.json
   def show
+    @receipt_items = @receipt.receipt_items;
   end
 
   # GET /receipts/new
