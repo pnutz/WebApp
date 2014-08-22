@@ -1,5 +1,7 @@
 class TagsController < ApplicationController
   load_and_authorize_resource
+	skip_load_resource only: [:create]
+	before_action :set_model, only: [:create]
 
   # GET /tags/:type/:id
   # :type - the type of data to associate the tag with
@@ -26,18 +28,22 @@ class TagsController < ApplicationController
   #         ie. receipt_item, user, receipt 
   # :id - the id of the type_item to be associated
   def create
+    _type_item = nil
     if (params[:name] != nil)
       # retrieve type_item from database 
       _type_item = @model.find(params[:id])
+    end
+
+    respond_to do |format|
       if (_type_item != nil)
-        @tag = Tag.find_or_create_by(name: params[:name])
+        @tag = Tag.where(name: params[:name]).first_or_create
         # associate the tag with the item
-        _item_type.tags<<@tag
-        render status: 200
+        puts @tag
+        _type_item.tags<<@tag
+        format.json { render json: @tag.errors, status: 200 }
+      else
+        format.json { render json: @tag.errors, status: 500 }
       end
-      render status: 404
-    else
-      render status: 500
     end
   end
 
@@ -57,6 +63,23 @@ class TagsController < ApplicationController
       render status: 404 
     else
       render status: 500
+    end
+  end
+
+  private
+
+  def set_model
+    case params[:type]
+    when "user"
+      @model = User
+    when "receipt"
+      @model = Receipt
+    when "receipt_item"
+      @model = ReceiptItem
+    else
+      # TODO: handle properly
+      puts "Received Invalid Parameter"
+      render status: 400 
     end
   end
 end

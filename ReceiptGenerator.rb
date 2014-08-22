@@ -1,7 +1,10 @@
 Folder.delete_all
 Receipt.delete_all
+ReceiptItem.delete_all
 Vendor.delete_all
 ItemType.delete_all
+Currency.delete_all
+PurchaseType.delete_all
 
 ["Books", "Video", "Clothes", 
  "Electronics", "Office Supplies", 

@@ -11,9 +11,7 @@ class Ability
 		else
 			can :read, :all
       cannot :read, [Receipt, Folder, FolderType, Document]
-      can :crud, [Receipt, Folder, FolderType, Document], :user_id => user.id
-      # allow users to access tags
-      can :manage, Tag, :user_id => user.id
+      can :crud, [Receipt, Folder, FolderType, Document, Tag], :user_id => user.id
 		end
   end
 end
