@@ -37,7 +37,11 @@
         <td><%= receipt.note %></td>
         <td>$<%= number_with_precision(receipt.total, :precision => 2) %></td>
         <td><%= receipt.transaction_number %></td>
-        <td><%= receipt.purchase_type.name %></td>
+        <% if (receipt.purchase_type != nil) %>
+          <td><%= receipt.purchase_type.name %></td>
+        <% else %>
+          <td></td>
+        <% end %>
 				<% if (receipt.folder != nil) %>
 					<td><%= receipt.folder.name %></td>
 				<% else %>

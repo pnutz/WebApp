@@ -20,10 +20,12 @@
   <%= @receipt.transaction_number %>
 </p>
 
+<% if (@receipt.purchase_type != nil) %>
 <p>
   <strong>Purchase type:</strong>
   <%= @receipt.purchase_type.name %>
 </p>
+<% end %>
 
 <% if (@receipt.folder != nil) %>
 	<p>

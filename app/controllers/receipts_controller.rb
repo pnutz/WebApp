@@ -39,11 +39,11 @@ class ReceiptsController < ApplicationController
     if (newReceipt[:receipt_items_attributes] != nil)
       newReceipt[:receipt_items_attributes].values.each do |item|
         # only look at receipt items that will be created
-        if (item[:_destroy] == "false")
+        if (item[:destroy] == nil || item[:_destroy] == "false")
           # create new ItemType if it does not exist, set item_type_id if it exists
           type = ItemType.find_by name: item[:itemtype]
           if (type == nil)
-            type = ItemType.create(:name => item[:itemtype])
+            type = ItemType.create(name: item[:itemtype])
           end
           item[:item_type_id] = type.id
 
@@ -129,11 +129,11 @@ class ReceiptsController < ApplicationController
       if (updateReceipt[:receipt_items_attributes] != nil)
         updateReceipt[:receipt_items_attributes].values.each do |item|
           # only look at receipt items that will be created
-          if (item[:_destroy] == "false")
+          if (item[:destroy] == nil || item[:_destroy] == "false")
             # create new ItemType if it does not exist, set item_type_id if it exists
             type = ItemType.find_by name: item[:itemtype]
             if (type == nil)
-              type = ItemType.create(:name => item[:itemtype])
+              type = ItemType.create(name: item[:itemtype])
             end
             item[:item_type_id] = type.id
 
@@ -191,17 +191,17 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:date, 
-                                      :numeric_date, 
-                                      :total, 
-                                      :transaction_number, 
-                                      :purchase_type_id, 
-                                      :title, 
-                                      :folder_id, 
-                                      :note, 
-                                      :vendor_id, 
-                                      :vendor_name, 
-                                      :currency_id, 
+      params.require(:receipt).permit(:date,
+                                      :numeric_date,
+                                      :total,
+                                      :transaction_number,
+                                      :purchase_type_id,
+                                      :title,
+                                      :folder_id,
+                                      :note,
+                                      :vendor_id,
+                                      :vendor_name,
+                                      :currency_id,
                                       :user_id,
                                       tag_names: [],
                                       receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ],
