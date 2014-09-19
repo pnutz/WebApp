@@ -5,12 +5,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :confirmable
 
-	after_create :initialize_folder, :auto_confirm
+  after_create :initialize_folder, :auto_confirm
 
 	has_many :receipts
   has_many :folders
 	has_many :folder_types
   has_many :documents
+  has_one :user_settings
 
   before_save :ensure_authentication_token
 

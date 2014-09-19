@@ -88,3 +88,9 @@ gem 'faker'
 
 # paperclip for file management
 gem 'paperclip'
+
+# geoip to find out countries from IP addresses
+gem 'geoip'
+
+# country/currency information
+gem 'countries'

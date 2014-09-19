@@ -2,13 +2,13 @@ WebApp::Application.routes.draw do
 
   resources :documents
 
-  devise_for :users, :controllers => {:omniauth_callbacks => "omniauth_callbacks"}
+  devise_for :users, :controllers => {:omniauth_callbacks => "omniauth_callbacks", :registrations => "users/registrations"}
   resources :folder_types
 
   resources :purchase_types
 
   resources :receipt_items
-	
+
   namespace :api do
     namespace :v1  do
 #          resources :tokens,:only => [:create, :destroy]
@@ -36,7 +36,7 @@ WebApp::Application.routes.draw do
   get "tags/:type/:id", :to => 'tags#index'
   post "tags/:type/:id", :to => 'tags#create'
 
-  
+
   # makes our default page the 'index' endpoint in the HomeController
   root to: 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.

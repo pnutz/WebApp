@@ -6,38 +6,19 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-["Online", "Physical"].each do |pt|
-  PurchaseType.find_or_create_by_name(pt)
+# sort by currency code
+all_countries = Country.all
+valid_countries = []
+
+all_countries.each do |country|
+  valid_countries << country if Country[country[1]].currency != nil
 end
 
-["Canada", "USA", "Japan", "England", "Turkey", "Sweden", "Germany", "India"].each do |country|
-  Country.find_or_create_by_name(country)
+valid_countries = valid_countries.sort_by { |country| Country[country[1]].currency['code'] }
+valid_countries.each do |country|
+  Currency.find_or_create_by(:code => Country[country[1]].currency['code'],
+                            :description => Country[country[1]].currency['code'] + " " + Country[country[1]].currency['name'],
+                            :symbol => Country[country[1]].currency['symbol'])
 end
 
-canada = Country.find_by_name("Canada")
-["BC", "AB"].each do |ps|
-  canada.province_states.find_or_create_by_name(ps)
-end
-
-usa = Country.find_by_name("USA")
-["WA"].each do |ps|
-  usa.province_states.find_or_create_by_name(ps)
-end
-
-bc = ProvinceState.find_by_name("BC")
-["Vancouver", "Burnaby", "Richmond", "Surrey", "North Vancouver"].each do |city|
-  bc.cities.find_or_create_by_name(city)
-end
-
-ab = ProvinceState.find_by_name("AB")
-["Calgary", "Edmonton"].each do |city|
-  ab.cities.find_or_create_by_name(city)
-end
-
-wa = ProvinceState.find_by_name("WA")
-["Seattle"].each do |city|
-  wa.cities.find_or_create_by_name(city)
-end
-
-Currency.create(:code => "CAD", :description => "Canadian Dollars")
-Currency.create(:code => "USD", :description => "US Dollars")
+puts "Finished seeding database"
