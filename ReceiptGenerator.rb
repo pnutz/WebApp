@@ -1,47 +1,19 @@
 Folder.delete_all
 Receipt.delete_all
 ReceiptItem.delete_all
-Vendor.delete_all
-ItemType.delete_all
-Currency.delete_all
-PurchaseType.delete_all
-
-["Books", "Video", "Clothes", 
- "Electronics", "Office Supplies", 
- "Sporting Goods"].each do |item_type|
-   newType = ItemType.create(:name => item_type);
-   newType.save();
-end
-
-["Amazon", "Wal-Mart", "NCIX", "TigerDirect", "eBay", 
- "NewEgg", "London Drugs", "Best Buy", "FutureShop"].each do |vendor|
-    newVendor = Vendor.create(:name => vendor);
-    newVendor.save();
-end
-
-["CAD", "USD", "RMB", "EUR"].each do |money|
-  currency = Currency.create(:code => money);
-  currency.save();
-end
-
-["Auto", "Food", "Entertainment", "Sports"].each do |purchase_type|
-  purchase = PurchaseType.create(:name => purchase_type);
-  purchase.save()
-end
-
 
 # add receipts to users
 User.all.each do |user|
   # add non sub folders
   5.times do
-    Folder.create(:name => Faker::Name.name, 
+    Folder.create(:name => Faker::Name.name,
                   :folder_type_id => 5,
                   :folder_id => nil,
                   :description => "fdfas",
                   :user_id => user.id)
   end
   5.times do
-    Folder.create(:name => Faker::Name.name, 
+    Folder.create(:name => Faker::Name.name,
                   :folder_type_id => 5,
                   :folder_id => Folder.where(:user_id => user.id, :folder_id => nil).sample.id,
                   :description => "sub folderrrrr",
@@ -73,3 +45,5 @@ User.all.each do |user|
     item.save()
   end
 end
+
+puts "Finished seeding database with false data"
