@@ -1,5 +1,5 @@
 json.array!(@currencies) do |currency|
-  if (current_user.user_settings.currency_id == currency.id)
+  if (current_user.user_setting.currency_id == currency.id)
     json.selected :true
   else
     json.selected :false

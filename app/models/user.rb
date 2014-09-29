@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :folders
 	has_many :folder_types
   has_many :documents
-  has_one :user_settings
+  has_one  :user_setting
 
   before_save :ensure_authentication_token
 

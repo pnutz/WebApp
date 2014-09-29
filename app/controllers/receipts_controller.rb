@@ -208,4 +208,3 @@ class ReceiptsController < ApplicationController
                                       documents_attributes: [ :id, :is_snapshot, :data ])
     end
 end
-

@@ -57,7 +57,7 @@ class FoldersController < ApplicationController
   # DELETE /folders/1.json
   def destroy
 		destroy_tree(@folder)
-		
+
     respond_to do |format|
       format.html { redirect_to folders_url }
       format.json { head :no_content }
@@ -73,22 +73,22 @@ class FoldersController < ApplicationController
 		# Create new receipt from folder view with folder_id initialized
 		def new_receipt
 			#params[:folder_id]
-			#redirect_to 
+			#redirect_to
 		end
-		
+
 		# Iterate through folder tree, destroy children and free receipts
 		def destroy_tree(root)
 			while (root.folders.size != 0)
 				destroy_tree(root.folders.first)
 			end
-			
+
 			root.receipts.each do |receipt|
 				receipt.update_attribute(:folder_id, nil)
 			end
-			
+
 			root.destroy
 		end
-		
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def folder_params
       params.require(:folder).permit(:name, :description, :user_id, :folder_type_id, :folder_id)
