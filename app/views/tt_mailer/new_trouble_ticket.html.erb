@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>New Trouble Ticket Submitted</h3>
+    <h4>By <%= @user.email %></h4>
+    <h4><%= @timestamp.inspect %></h4>
+    <p>
+      <%= @content %>
+    </p>
+  </body>
+</html>
