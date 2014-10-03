@@ -12,6 +12,9 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
+# Import bootstrap to use with SASS
+gem 'bootstrap-sass', '~> 3.2.0'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -28,7 +31,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 
 # JQuery UI
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '~> 4.2.1'
 
 # jQuery Migrate (jquery-rails version has removed older functionality, required for jsTree)
 gem 'jquery-migrate-rails'
@@ -64,8 +67,6 @@ group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-
-gem 'bootstrap-sass'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

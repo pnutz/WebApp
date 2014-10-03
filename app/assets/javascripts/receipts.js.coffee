@@ -5,19 +5,19 @@
 $(document).on 'ready page:load', ->
 	$("#allReceipts").tablesorter()
 	$("#receipt_date").datepicker()
-	
+
 	# calculate total text field value.  ignore data from optional argument indexRemoved
 	updateTotal = (indexRemoved) ->
 		indexRemoved = (if (typeof indexRemoved is "undefined") then -1 else indexRemoved)
 		total = 0
-		
+
 		# go through each receipt item (by is_credit element)
 		item_cost = $(".item_cost")
 		index = 0
 
 		while index < item_cost.length
 			currentName = item_cost.eq(index).attr("name")
-			
+
 			# parse index of element name
 			receipt_index = currentName.substring(34, currentName.length - 7)
 			if $("[name='receipt[receipt_items_attributes][" + receipt_index + "][_destroy]']").val() is "false" and receipt_index isnt indexRemoved
@@ -44,15 +44,15 @@ $(document).on 'ready page:load', ->
 				$("#receipt_total").prop "readonly", false
 				$("#receipt_total").removeClass "input-disabled"
 		return
-		
+
 	$(document).on "keyup", ".item_cost", ->
 		updateTotal()
 		return
-		
+
 	$(document).on "change", ".item_quantity", ->
 		updateTotal()
 		return
-		
+
 	$(document).on "keyup", ".item_quantity", ->
 		updateTotal()
 		return

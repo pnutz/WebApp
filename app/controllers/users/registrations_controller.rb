@@ -1,6 +1,12 @@
 # app/controllers/users/registrations_controller.rb
 class Users::RegistrationsController < Devise::RegistrationsController
 
+  def new
+    @disable_nav = true
+
+    super
+  end
+
   def create
     super
 
@@ -11,7 +17,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     country_country = Country.find_country_by_alpha3(geoip_country.country_code3)
     currency = Currency.where(:code => country_country.currency['code'])[0]
 
-    UserSettings.create(user_id: current_user.id, currency_id: currency.id)
+    UserSetting.create(user_id: current_user.id, currency_id: currency.id)
   end
 
   def remote_ip

@@ -1,51 +1,182 @@
-<style type="text/css">
-	ul li{
-		display: inline;
-	}
-</style>
-<p>
-	<b><%= link_to 'Add Folder', new_folder_path %> | <%= link_to 'Folder List', folders_path %><br>
-	<%= link_to 'Add Receipt', new_receipt_path %> | <%= link_to 'Receipt List', receipts_path %><br>
-	<%= link_to 'Add Folder Type', new_folder_type_path %> | <%= link_to 'Folder Type List', folder_types_path %></b>
-</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<div id="foldertabs">
-	<ul>
-		<% if (@receipts.count != 0) %>
-			<li class="foldertab"><a href="#0">Folder-less Receipts</a></li>
-		<% end %>
-		<% @tabs.each do |tab| %>
-			<li class="foldertab"><a href="#<%= tab.id %>"><%= tab.name %></a></li>
-		<% end %>
-	</ul>
+<head>
 
-	<% if (@receipts.count != 0) %>
-		<div id="0" class="treeViewDiv">
-			<ul>
-				<% @receipts.each do |receipt| %>
-          <li class='receipt' id='receipt-<%= receipt.id %>' data-jstree='{"icon":"assets/receipt_icon.png"}'>
-          <%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y") + "- Total: #{receipt.total}", receipt) %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-          <p>
-            <% if (receipt.documents != nil) %>
-              <% receipt.documents.each do |document| %>
-                <%= image_tag document.file.url(:thumb) %>
-              <% end %>
-            <% end %>
-          </p>
-          <% end %>
-          </li>
+    <title>TwoReceipt - An Online Receipt Management System</title>
 
-			</ul>
-		</div>
-	<% end %>
-	<% @tabs.each do |tab| %>
-		<div id="<%= tab.id %>" class="treeViewDiv">
-			<ul>
-				<% tab.folders.where(:folder_id => nil).each do |folder| %>
-					<%= recursive_tree folder %>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
-</div>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="intro-header">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>TwoReceipt</h1>
+                        <h3>An Online Receipt Management System</h3>
+                        <hr class="intro-divider">
+                        <ul class="list-inline intro-social-buttons">
+                            <li>
+                                <a href="https://chrome.google.com/webstore/detail/lookout/oeiefnfaafnkeiojgkpephegakjpplke" class="btn btn-default btn-lg"><i class="fa fa-google fa-fw"></i> <span class="network-name">Chrome Extension</span></a>
+                            </li>
+                            <li>
+                                <%= link_to ("<i class='fa fa-pencil fa-fw'></i><span class='network-name'>Sign up</span>").html_safe, new_user_registration_path, { :class => "btn btn-default btn-lg" } %>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    <!-- Page Content -->
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Death to the Stock Photo:<br>Special Thanks</h2>
+                    <p class="lead">A special thanks to <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> for providing the photographs that you see in this template. Visit their website to become a member.</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="assets/img/ipad.png" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="content-section-b">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">3D Device Mockups<br>by PSDCovers</h2>
+                    <p class="lead">Turn your 2D designs into high quality, 3D product shots in seconds using free Photoshop actions by <a target="_blank" href="http://www.psdcovers.com/">PSDCovers</a>! Visit their website to download some of their awesome, free photoshop actions!</p>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <img class="img-responsive" src="assets/img/dog.png" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-b -->
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Google Web Fonts and<br>Font Awesome Icons</h2>
+                    <p class="lead">This template features the 'Lato' font, part of the <a target="_blank" href="http://www.google.com/fonts">Google Web Font library</a>, as well as <a target="_blank" href="http://fontawesome.io">icons from Font Awesome</a>.</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="assets/img/phones.png" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="banner">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Get Started:</h2>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-inline banner-social-buttons">
+                      <li>
+                        <a href="https://chrome.google.com/webstore/detail/lookout/oeiefnfaafnkeiojgkpephegakjpplke" class="btn btn-default btn-lg"><i class="fa fa-google fa-fw"></i> <span class="network-name">Chrome Extension</span></a>
+                      </li>
+                      <li>
+                        <%= link_to ("<i class='fa fa-pencil fa-fw'></i><span class='network-name'>Sign up</span>").html_safe, new_user_registration_path, { :class => "btn btn-default btn-lg" } %>
+                      </li>
+                      <li>
+                        <a href="#" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.banner -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#home">Home</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#about">About</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#services">Services</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; TwoReceipt 2014. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

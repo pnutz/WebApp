@@ -1,0 +1,51 @@
+<style type="text/css">
+	ul li{
+		display: inline;
+	}
+</style>
+<p>
+	<b><%= link_to 'Add Folder', new_folder_path %> | <%= link_to 'Folder List', folders_path %><br>
+	<%= link_to 'Add Receipt', new_receipt_path %> | <%= link_to 'Receipt List', receipts_path %><br>
+	<%= link_to 'Add Folder Type', new_folder_type_path %> | <%= link_to 'Folder Type List', folder_types_path %></b>
+</p>
+
+<div id="foldertabs">
+	<ul>
+		<% if (@receipts.count != 0) %>
+			<li class="foldertab"><a href="#0">Folder-less Receipts</a></li>
+		<% end %>
+		<% @tabs.each do |tab| %>
+			<li class="foldertab"><a href="#<%= tab.id %>"><%= tab.name %></a></li>
+		<% end %>
+	</ul>
+
+	<% if (@receipts.count != 0) %>
+		<div id="0" class="treeViewDiv">
+			<ul>
+				<% @receipts.each do |receipt| %>
+          <li class='receipt' id='receipt-<%= receipt.id %>' data-jstree='{"icon":"assets/receipt_icon.png"}'>
+          <%= link_to(receipt.title + " - " + receipt.date.strftime("%m/%d/%Y") + "- Total: #{receipt.total}", receipt) %>
+
+          <p>
+            <% if (receipt.documents != nil) %>
+              <% receipt.documents.each do |document| %>
+                <%= image_tag document.file.url(:thumb) %>
+              <% end %>
+            <% end %>
+          </p>
+          <% end %>
+          </li>
+
+			</ul>
+		</div>
+	<% end %>
+	<% @tabs.each do |tab| %>
+		<div id="<%= tab.id %>" class="treeViewDiv">
+			<ul>
+				<% tab.folders.where(:folder_id => nil).each do |folder| %>
+					<%= recursive_tree folder %>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+</div>
