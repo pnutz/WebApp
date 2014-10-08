@@ -37,6 +37,7 @@ WebApp::Application.routes.draw do
   # Gets the tags for either a receipt, receipt_item or user
   get "tags/:type/:id", :to => 'tags#index'
   post "tags/:type/:id", :to => 'tags#create'
+  delete "tags/:type/:type_id/:tag_id", :to => 'tags#destroy'
 
 
   # makes our default page the 'index' endpoint in the HomeController

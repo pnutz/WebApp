@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
   load_and_authorize_resource
 	skip_load_resource only: [:create]
-	before_action :set_model, only: [:create]
+	before_action :set_model, only: [:create, :destroy]
 
   # GET /tags/:type/:id
   # :type - the type of data to associate the tag with
@@ -47,22 +47,20 @@ class TagsController < ApplicationController
     end
   end
 
-  # DELETE /tags/:type/:id/:tag_id
+  # DELETE /tags/:type/:type_id/:tag_id
   # :type - the type of data to associate the tag with
   #         ie. receipt_item, user, receipt 
   # :id - the id of the type_item 
   # :tag_id - the id of the tag to be removed from the type_item
-  def delete
-    if (params[:name] != nil)
-      _type_item = @model.find(params[:id])
+  def destroy 
+    _type_item = @model.find(params[:type_id])
+    respond_to do |format|
       if (_type_item != nil)
         @tag = Tag.find(params[:tag_id])
-        _type_item.delete(@tag)
-        render status: 200
+        _type_item.tags.destroy(@tag)
+        format.json { render json: @tag.errors, status: 200 }
       end
-      render status: 404 
-    else
-      render status: 500
+      format.json { render json: @tag.errors, status: 404 }
     end
   end
 
