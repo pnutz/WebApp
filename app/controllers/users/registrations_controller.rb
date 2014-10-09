@@ -8,16 +8,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
+    @disable_nav = true
+
     super
 
-    ip_address = remote_ip()
-    logger.debug "request ip address: " + ip_address
+    if (current_user != nil)
+      ip_address = remote_ip()
+      logger.debug "request ip address: " + ip_address
 
-    geoip_country = GeoIP.new('GeoIP.dat').country(ip_address)
-    country_country = Country.find_country_by_alpha3(geoip_country.country_code3)
-    currency = Currency.where(:code => country_country.currency['code'])[0]
+      geoip_country = GeoIP.new('GeoIP.dat').country(ip_address)
+      country_country = Country.find_country_by_alpha3(geoip_country.country_code3)
+      currency = Currency.where(:code => country_country.currency['code'])[0]
 
-    UserSetting.create(user_id: current_user.id, currency_id: currency.id)
+      UserSetting.create(user_id: current_user.id, currency_id: currency.id)
+    end
   end
 
   def remote_ip
