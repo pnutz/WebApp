@@ -27,9 +27,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def remote_ip
     if request.remote_ip == '127.0.0.1'
       # hard-coded remote address
+      # TODO: REMOVE LATER
       '24.87.70.181'
     else
       request.remote_ip
     end
+  end
+
+  protected
+
+  # override sign_up (called after User::Create, just signs in user)
+  def sign_up(resource_name, resource)
+    true
   end
 end
