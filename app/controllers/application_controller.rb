@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def after_sign_in_path_for(resource_or_scope)
+    root_url
+  end
+
   def authenticate_user_from_token!
     puts "authenticating user"
     # No token in query string so just return

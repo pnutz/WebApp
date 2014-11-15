@@ -11,17 +11,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @disable_nav = true
 
     super
-
-    if (current_user != nil)
-      ip_address = remote_ip()
-      logger.debug "request ip address: " + ip_address
-
-      geoip_country = GeoIP.new('GeoIP.dat').country(ip_address)
-      country_country = Country.find_country_by_alpha3(geoip_country.country_code3)
-      currency = Currency.where(:code => country_country.currency['code'])[0]
-
-      UserSetting.create(user_id: current_user.id, currency_id: currency.id)
-    end
   end
 
   def remote_ip
@@ -38,6 +27,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # override sign_up (called after User::Create, just signs in user)
   def sign_up(resource_name, resource)
+    ip_address = remote_ip()
+    logger.debug "request ip address: " + ip_address
+
+    geoip_country = GeoIP.new('GeoIP.dat').country(ip_address)
+    country_country = Country.find_country_by_alpha3(geoip_country.country_code3)
+    currency = Currency.where(:code => country_country.currency['code'])[0]
+
+    UserSetting.create(user_id: resource.id, currency_id: currency.id, hotkey_receipt: 65, hotkey_vault: 86)
+
     true
   end
 end

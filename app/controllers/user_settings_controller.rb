@@ -32,6 +32,6 @@ class UserSettingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_settings_params
-      params.require(:user_setting).permit(:id, :currency_id)
+      params.require(:user_setting).permit(:id, :currency_id, :hotkey_receipt, :hotkey_vault)
     end
 end
