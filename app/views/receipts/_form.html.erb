@@ -13,10 +13,6 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
     <%= f.label :date %><br>
 	<% if (@receipt.date != nil) %>
 	  <%= f.text_field :date, :value => @receipt.date.strftime("%m/%d/%Y") %>
@@ -29,8 +25,8 @@
     <%= f.text_field :transaction_number %>
   </div>
   <div class="field">
-    <%= f.label :purchase_type_id %><br>
-    <%= f.collection_select :purchase_type_id, PurchaseType.all, :id, :name, :include_blank => true %>
+    <%= f.label :category_id %><br>
+    <%= f.collection_select :category_id, ReceiptCategory.all, :id, :category, :include_blank => true %>
   </div>
   <div class="field">
     <%= f.label :folder_id %><br>
@@ -54,7 +50,7 @@
   </div>
   <div class="field">
     <%= f.label :currency_id %><br>
-    <%#<%= f.collection_select :currency_id, Currency.all, :id, :currency_desc, :include_blank => true %>%>
+    <%= f.collection_select :currency_id, Currency.all, :id, :currency_desc, :include_blank => true %>
   </div>
 
   <h2>Receipt Items</h2>

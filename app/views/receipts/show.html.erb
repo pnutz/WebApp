@@ -1,11 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @receipt.title %>
-</p>
-
-<p>
   <strong>Date:</strong>
 	<%= @receipt.date.strftime("%m/%d/%Y") %>
 </p>
@@ -16,14 +11,19 @@
 </p>
 
 <p>
+  <strong>Subtotal:</strong>
+  <%= @receipt.subtotal %>
+</p>
+
+<p>
   <strong>Transaction number:</strong>
   <%= @receipt.transaction_number %>
 </p>
 
-<% if (@receipt.purchase_type != nil) %>
+<% if (@receipt.receipt_category != nil) %>
 <p>
-  <strong>Purchase type:</strong>
-  <%= @receipt.purchase_type.name %>
+  <strong>Receipt category:</strong>
+  <%= @receipt.receipt_category.category %>
 </p>
 <% end %>
 

@@ -1,11 +1,11 @@
 WebApp::Application.routes.draw do
 
+  resources :profiles
+
   resources :documents
 
   devise_for :users, :controllers => {:omniauth_callbacks => "omniauth_callbacks", :registrations => "users/registrations"}
   resources :folder_types
-
-  resources :purchase_types
 
   resources :receipt_items
 
@@ -19,7 +19,8 @@ WebApp::Application.routes.draw do
 
   resources :receipts
   resources :currencies
-  resources :purchase_types
+  resources :receipt_categories
+  resources :profiles
   resources :user_settings
   resources :trouble_tickets
 

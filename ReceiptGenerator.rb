@@ -4,32 +4,43 @@ ReceiptItem.delete_all
 
 # add receipts to users
 User.all.each do |user|
+  # add profiles
+  2.times do
+    Profile.create(:name => Faker::Name.name,
+                   :user_id => user.id)
+  end
+
   # add non sub folders
   5.times do
     Folder.create(:name => Faker::Name.name,
                   :folder_type_id => 5,
                   :folder_id => nil,
                   :description => "fdfas",
+                  :profile_id => Profile.where(:user_id => user.id).sample.id,
                   :user_id => user.id)
   end
   5.times do
+    parent_folder = Folder.where(:user_id => user.id, :folder_id => nil).sample
     Folder.create(:name => Faker::Name.name,
                   :folder_type_id => 5,
-                  :folder_id => Folder.where(:user_id => user.id, :folder_id => nil).sample.id,
+                  :folder_id => parent_folder.id,
                   :description => "sub folderrrrr",
+                  :profile_id => parent_folder.profile_id,
                   :user_id => user.id)
   end
 
   50.times do
     receipt = Receipt.create()
     receipt.total = Faker::Number.decimal(4)
-    receipt.title = Faker::Lorem.sentence
+    receipt.subtotal = Faker::Number.decimal(4)
     receipt.transaction_number = Faker::Number.number(4)
     receipt.note = Faker::Lorem.sentence
     receipt.currency_id = Currency.all.sample.id
-    receipt.folder_id = Folder.all.sample.id
+    folder = Folder.where(:user_id => user.id).sample
+    receipt.folder_id = folder.id
     receipt.vendor_id = Vendor.all.sample.id
-    receipt.purchase_type_id = PurchaseType.all.sample.id
+    receipt.category_id = ReceiptCategory.all.sample.id
+    receipt.profile_id = folder.profile_id
     receipt.user_id = user.id
     receipt.date = rand(Date.parse('2012-01-01')..Date.parse('2012-12-01'))
     receipt.save()

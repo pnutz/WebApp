@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @receipt_category.category %>
+</p>
+
+<%= link_to 'Edit', edit_receipt_category_path(@receipt_category) %> |
+<%= link_to 'Receipt Category List', receipt_categories_path %>

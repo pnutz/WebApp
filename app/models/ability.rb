@@ -10,8 +10,8 @@ class Ability
 			can :manage, :all
 		else
 			can :read, :all
-      cannot :read, [Receipt, Folder, FolderType, Document, UserSetting]
-      can :crud, [Receipt, Folder, FolderType, Document, Tag, UserSetting], :user_id => user.id
+      cannot :read, [Receipt, Folder, FolderType, Document, UserSetting, Profile]
+      can :crud, [Receipt, Folder, FolderType, Document, Tag, UserSetting, Profile], :user_id => user.id
 		end
   end
 end

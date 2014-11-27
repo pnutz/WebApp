@@ -1,0 +1,27 @@
+<h1>Listing receipt_categories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receipt_categories.each do |receipt_category| %>
+      <tr>
+        <td><%= receipt_category.category %></td>
+        <td><%= link_to 'Show', receipt_category %></td>
+        <td><%= link_to 'Edit', edit_receipt_category_path(receipt_category) %></td>
+        <td><%= link_to 'Destroy', receipt_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New receipt category', new_receipt_category_path %>

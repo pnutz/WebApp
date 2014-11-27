@@ -15,11 +15,10 @@
   <thead>
     <tr>
 			<th>Date</th>
-			<th>Title</th>
 			<th>Note</th>
 			<th>Total</th>
 			<th>Transaction number</th>
-			<th>Purchase type</th>
+			<th>Category</th>
 			<th>Folder</th>
 			<th>Vendor</th>
 			<th>Currency</th>
@@ -33,12 +32,11 @@
     <% @receipts.each do |receipt| %>
       <tr>
         <td><%= receipt.date.strftime("%m/%d/%Y") %></td>
-				<td><%= receipt.title %></td>
         <td><%= receipt.note %></td>
         <td>$<%= number_with_precision(receipt.total, :precision => 2) %></td>
         <td><%= receipt.transaction_number %></td>
-        <% if (receipt.purchase_type != nil) %>
-          <td><%= receipt.purchase_type.name %></td>
+        <% if (receipt.category != nil) %>
+          <td><%= receipt.category.category %></td>
         <% else %>
           <td></td>
         <% end %>

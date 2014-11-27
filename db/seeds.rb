@@ -34,9 +34,12 @@ valid_countries.each do |country|
                             :symbol => Country[country[1]].currency['symbol'])
 end
 
-["Auto", "Food", "Entertainment", "Sports"].each do |purchase_type|
-  purchase = PurchaseType.create(:name => purchase_type);
-  purchase.save()
+["Appliances", "Automotive", "Baby", "Clothing & Accessories", "Electronics",
+  "Entertainment", "Furniture", "Grocery", "Health & Beauty", "Home & Pets",
+  "Jewellery & Watches", "Movies, Music, & Books", "Office & Stationery",
+  "Outdoor Living", "Sports & Recreation", "Toys", "Video Games"].each do |receipt_category|
+  category = ReceiptCategory.create(:category => receipt_category);
+  category.save()
 end
 
 puts "Finished seeding database"
