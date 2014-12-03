@@ -1,4 +1,4 @@
 class ReceiptTax < ActiveRecord::Base
   belongs_to :receipt
-  belongs_to :item_tax
+  belongs_to :tax_type
 end

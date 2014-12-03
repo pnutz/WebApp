@@ -96,6 +96,7 @@ class ReceiptsController < ApplicationController
     newReceipt.delete(:numeric_date)
     newReceipt.delete(:tag_names)
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
+    newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:taxtype):y)] }]:v)] }]
     newReceipt = Hash[newReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:data):y)] }]:v)] }]
 
     @receipt = current_user.receipts.new(newReceipt)
@@ -171,6 +172,7 @@ class ReceiptsController < ApplicationController
       updateReceipt.delete(:vendor_name)
       updateReceipt.delete(:numeric_date)
       updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:itemtype):y)] }]:v)] }]
+      updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:taxtype):y)] }]:v)] }]
       updateReceipt = Hash[updateReceipt.map {|k,v| [k,(v.respond_to?(:except) ? Hash[v.map {|x,y| [x,(y.respond_to?(:except) ? y.except(:data):y)] }]:v)] }]
 
       if @receipt.update(updateReceipt)
