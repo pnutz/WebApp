@@ -1,10 +1,10 @@
-<%= form_for(@receipt_item) do |f| %>
-  <% if @receipt_item.errors.any? %>
+<%= form_for(@receipt_tax) do |f| %>
+  <% if @receipt_tax.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@receipt_item.errors.count, "error") %> prohibited this receipt_item from being saved:</h2>
+      <h2><%= pluralize(@receipt_tax.errors.count, "error") %> prohibited this receipt_tax from being saved:</h2>
 
       <ul>
-      <% @receipt_item.errors.full_messages.each do |msg| %>
+      <% @receipt_tax.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -16,16 +16,12 @@
     <%= f.collection_select :receipt_id, current_user.receipts, :id, :title, :include_blank => true %>
   </div>
   <div class="field">
-    <%= f.label :item_type_id %><br>
-    <%= f.collection_select :item_type_id, ItemType.all, :id, :name, :include_blank => true %>
+    <%= f.label :tax_type_id %><br>
+    <%= f.collection_select :tax_type_id, TaxType.all, :id, :name, :include_blank => true %>
   </div>
   <div class="field">
     <%= f.label :cost %><br>
     <%= f.text_field :cost %>
-  </div>
-  <div class="field">
-    <%= f.label :quantity %><br>
-    <%= f.number_field :quantity %>
   </div>
   <div class="actions">
     <%= f.submit %>

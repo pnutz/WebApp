@@ -1,0 +1,31 @@
+<h1>Listing receipt_taxes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Receipt</th>
+      <th>Tax type</th>
+      <th>Cost</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receipt_taxes.each do |receipt_tax| %>
+      <tr>
+        <td><%= receipt_tax.receipt %></td>
+        <td><%= receipt_tax.item_type %></td>
+        <td><%= receipt_tax.cost %></td>
+        <td><%= link_to 'Show', receipt_tax %></td>
+        <td><%= link_to 'Edit', edit_receipt_tax_path(receipt_tax) %></td>
+        <td><%= link_to 'Destroy', receipt_tax, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Receipt tax', new_receipt_tax_path %>

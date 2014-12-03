@@ -67,13 +67,8 @@
         <tr>
           <td><%= item.item_type.name %></td>
           <td><%= item.quantity %></td>
-          <% if (item.is_credit == false) %>
-            <td><%= item.cost %></td>
-            <td><%= item.cost * item.quantity %></td>
-          <% else %>
-            <td><%= -1 * item.cost %></td>
-            <td><%= -1 * item.cost * item.quantity %></td>
-          <% end %>
+          <td><%= item.cost %></td>
+          <td><%= item.cost * item.quantity %></td>
         </tr>
       <% end %>
     </table>

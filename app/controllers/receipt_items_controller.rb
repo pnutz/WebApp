@@ -70,6 +70,6 @@ class ReceiptItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_item_params
-      params.require(:receipt_item).permit(:receipt_id, :item_type_id, :cost, :quantity, :is_credit)
+      params.require(:receipt_item).permit(:receipt_id, :item_type_id, :cost, :quantity)
     end
 end

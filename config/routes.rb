@@ -8,6 +8,7 @@ WebApp::Application.routes.draw do
   resources :folder_types
 
   resources :receipt_items
+  resources :receipt_taxes
 
   namespace :api do
     namespace :v1  do

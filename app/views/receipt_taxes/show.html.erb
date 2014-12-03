@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Receipt:</strong>
+  <%= @receipt_tax.receipt %>
+</p>
+
+<p>
+  <strong>Item type:</strong>
+  <%= @receipt_tax.tax_type %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @receipt_tax.cost %>
+</p>
+
+<%= link_to 'Edit', edit_receipt_tax_path(@receipt_tax) %> |
+<%= link_to 'Receipt Tax List', receipt_taxes_path %>

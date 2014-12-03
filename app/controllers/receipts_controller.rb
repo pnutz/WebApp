@@ -46,15 +46,20 @@ class ReceiptsController < ApplicationController
             type = ItemType.create(name: item[:itemtype])
           end
           item[:item_type_id] = type.id
+        end
+      end
+    end
 
-					# set all costs to positive and define is_credit
-					int_cost = item[:cost].to_i
-					if (int_cost >= 0)
-						item[:is_credit] = false
-					else
-						item[:is_credit] = true
-						item[:cost] = (int_cost * -1).to_s
-					end
+    if (newReceipt[:receipt_taxes_attributes] != nil)
+      newReceipt[:receipt_taxes_attributes].values.each do |tax|
+        # only look at receipt taxes that will be created
+        if (tax[:destroy] == nil || tax[:_destroy] == "false")
+          # create new TaxType if it does not exist, set tax_type_id if it exists
+          type = TaxType.find_by name: tax[:taxtype]
+          if (type == nil)
+            type = TaxType.create(name: tax[:taxtype])
+          end
+          tax[:tax_type_id] = type.id
         end
       end
     end
@@ -136,18 +141,23 @@ class ReceiptsController < ApplicationController
               type = ItemType.create(name: item[:itemtype])
             end
             item[:item_type_id] = type.id
-
-						# set all costs to positive and define is_credit
-						int_cost = item[:cost].to_i
-						if (int_cost >= 0)
-							item[:is_credit] = false
-						else
-							item[:is_credit] = true
-							item[:cost] = (int_cost * -1).to_s
-						end
           end
         end
       end
+
+    if (updateReceipt[:receipt_taxes_attributes] != nil)
+      updateReceipt[:receipt_taxes_attributes].values.each do |tax|
+        # only look at receipt taxes that will be created
+        if (tax[:destroy] == nil || tax[:_destroy] == "false")
+          # create new TaxType if it does not exist, set tax_type_id if it exists
+          type = TaxType.find_by name: tax[:taxtype]
+          if (type == nil)
+            type = TaxType.create(name: tax[:taxtype])
+          end
+          tax[:tax_type_id] = type.id
+        end
+      end
+    end
 
       # try to find existing vendor
       vendor = Vendor.find_by name: updateReceipt[:vendor_name]
@@ -205,7 +215,8 @@ class ReceiptsController < ApplicationController
                                       :user_id,
                                       :profile_id,
                                       tag_names: [],
-                                      receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :is_credit, :_destroy ],
+                                      receipt_items_attributes: [ :id, :item_type_id, :itemtype, :cost, :quantity, :_destroy ],
+                                      receipt_taxes_attributes: [ :id, :tax_type_id, :taxtype, :cost, :_destroy ],
                                       documents_attributes: [ :id, :is_snapshot, :data ])
     end
 end
