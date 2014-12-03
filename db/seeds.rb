@@ -13,6 +13,11 @@
    newType.save();
 end
 
+["Sales Tax", "Shipping & Handling"].each do |tax_type|
+   newType = TaxType.create(:name => tax_type);
+   newType.save();
+end
+
 ["Amazon", "Wal-Mart", "NCIX", "TigerDirect", "eBay",
  "NewEgg", "London Drugs", "Best Buy", "FutureShop"].each do |vendor|
     newVendor = Vendor.create(:name => vendor);

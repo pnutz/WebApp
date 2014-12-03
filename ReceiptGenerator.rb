@@ -52,8 +52,15 @@ User.all.each do |user|
     item.item_type_id = ItemType.all.sample.id
     item.cost = Faker::Number.decimal(4)
     item.quantity = Faker::Number.number(3)
-    item.is_credit = false
     item.save()
+  end
+
+  75.times do
+    tax = ReceiptTax.create();
+    tax.receipt_id = Receipt.all.sample.id
+    tax.tax_type_id = TaxType.all.sample.id
+    tax.cost = Faker::Number.decimal(4)
+    tax.save()
   end
 end
 
