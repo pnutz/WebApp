@@ -7,10 +7,10 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  host: localhost
-  database: WebApp
-  username: root
-  password: templeton
+  host: us-cdbr-iron-east-01.cleardb.net
+  database: heroku_f90baac676f7e98
+  username: b40ee456ec840f
+  password: 00d72290
   pool: 5
 
 # Warning: The database defined as "test" will be erased and
@@ -20,18 +20,18 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  host: localhost
-  database: WebApp
-  username: root
-  password: templeton
+  host: us-cdbr-iron-east-01.cleardb.net
+  database: heroku_f90baac676f7e98
+  username: b40ee456ec840f
+  password: 00d72290
   pool: 5
 
 production:
   adapter: mysql2
   encoding: utf8
-  host: localhost
-  database: WebApp
+  host: us-cdbr-iron-east-01.cleardb.net
+  database: heroku_f90baac676f7e98
   reconnect: false
-  username: root
-  password: templeton
+  username: b40ee456ec840f
+  password: 00d72290
   pool: 5
