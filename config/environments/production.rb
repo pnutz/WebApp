@@ -69,6 +69,16 @@ WebApp::Application.configure do
   # the I18n.default_locale when a translation can not be found).
   config.i18n.fallbacks = true
 
+  # development settings for using mailcatcher gem
+  config.action_mailer.smtp_settings = {
+    :addresses      => ENV['MAILGUN_SMTP_SERVER'],
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => 'app32339058.mailgun.org',
+    :authentication => :plain
+  }
+
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
