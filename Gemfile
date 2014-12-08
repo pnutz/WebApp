@@ -6,10 +6,8 @@ gem 'rails', '4.0.1'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 
-# rails_serve_static_assets is dependent on this gem
-gem 'rails_stdout_logging'
 # allow static assets to be accessible for heroku deployment
-gem 'rails_serve_static_assets'
+gem 'rails_12factor', group: :production
 
 # MySQL
 gem 'mysql2'

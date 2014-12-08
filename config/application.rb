@@ -22,5 +22,9 @@ module WebApp
 
     #For deploying on heroku, whatever the hell this does - oscar
     config.assets.initialize_on_precompile = false
+    config.assets.precompile += [
+        '/page_specific/landing-page.css',
+        '/page_specific/font-awesome-4.1.0/css/font-awesome.min.css'
+    ]
   end
 end
