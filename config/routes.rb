@@ -4,7 +4,7 @@ WebApp::Application.routes.draw do
 
   resources :documents
 
-  devise_for :users, :controllers => {:omniauth_callbacks => "omniauth_callbacks", :registrations => "users/registrations"}
+  devise_for :users, :controllers => {:omniauth_callbacks => "omniauth_callbacks", :registrations => "users/registrations", :confirmations => "users/confirmations"}
   resources :folder_types
 
   resources :receipt_items
