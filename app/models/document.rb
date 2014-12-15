@@ -28,12 +28,20 @@ class Document < ActiveRecord::Base
   end
 
   has_attached_file :file,
+  # choose ftp backend
+  :storage => :ftp,
   # styles: original, thumb
   :styles => { :thumb => "200x200>" },
   # url to image from client (what client sees) - /documents/1/thumb
   :url => "/:class/:id?style=:style",
   # location of image on file system - outside rails directory (documents)
-  :path => "../:class/:receipt_id_partition/:is_snapshot/:style/:filename"
+  :path => "../:class/:receipt_id_partition/:is_snapshot/:style/:filename",
+
+  :ftp_servers => [{
+    :host => "ftp.tworeceipt.com",
+    :user => "rails_ftp",
+    :password => "rH4%s3N"
+  }]
 
   validates_attachment_presence :file
   # temp set to 5 mb, change to 1 mb or other later (ensure files will be under)
@@ -47,4 +55,3 @@ class Document < ActiveRecord::Base
     StringIO.new(Base64.decode64(image_data))
   end
 end
-

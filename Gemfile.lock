@@ -111,6 +111,8 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    paperclip-storage-ftp (1.2.3)
+      paperclip
     polyglot (0.3.5)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -171,6 +173,8 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    sqlite3 (1.3.9)
+    sqlite3 (1.3.9-x86-mingw32)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -213,11 +217,13 @@ DEPENDENCIES
   omniauth (~> 1.0)
   omniauth-facebook
   paperclip
+  paperclip-storage-ftp
   rails (= 4.0.1)
   rails_12factor
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
+  sqlite3
   therubyracer
   timeliness
   turbolinks

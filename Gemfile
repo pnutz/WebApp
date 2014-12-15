@@ -4,13 +4,13 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.1'
 
 # Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
+gem 'sqlite3', group: :development
 
 # allow static assets to be accessible for heroku deployment
 gem 'rails_12factor', group: :production
 
 # MySQL
-gem 'mysql2'
+gem 'mysql2', group: :production
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -92,6 +92,11 @@ gem 'faker'
 
 # paperclip for file management
 gem 'paperclip'
+# interface to imagemagick (for heroku)
+#gem 'rmagick', group: :production
+
+# ftp storage for paperclip
+gem 'paperclip-storage-ftp'
 
 # geoip to find out countries from IP addresses
 gem 'geoip'

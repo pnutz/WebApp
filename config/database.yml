@@ -4,14 +4,14 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 development:
-  adapter: mysql2
+  adapter: sqlite3
   encoding: utf8
-  reconnect: false
-  host: us-cdbr-iron-east-01.cleardb.net
-  database: heroku_f90baac676f7e98
-  username: b40ee456ec840f
-  password: 00d72290
+  database: WebApp
+  #username: kjmedia
+  #password: templeton
   pool: 5
+  timeout: 5000
+  #socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
