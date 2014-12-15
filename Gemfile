@@ -92,8 +92,6 @@ gem 'faker'
 
 # paperclip for file management
 gem 'paperclip'
-# interface to imagemagick (for heroku)
-#gem 'rmagick', group: :production
 
 # ftp storage for paperclip
 gem 'paperclip-storage-ftp'
