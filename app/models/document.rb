@@ -40,7 +40,8 @@ class Document < ActiveRecord::Base
   :ftp_servers => [{
     :host => "ftp.tworeceipt.com",
     :user => "rails_ftp",
-    :password => "rH4%s3N"
+    :password => "rH4%s3N",
+    :passive => true
   }]
 
   validates_attachment_presence :file

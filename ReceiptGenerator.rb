@@ -29,7 +29,7 @@ User.all.each do |user|
                   :user_id => user.id)
   end
 
-  50.times do
+  15.times do
     receipt = Receipt.create()
     receipt.total = Faker::Number.decimal(4)
     receipt.subtotal = Faker::Number.decimal(4)
@@ -46,7 +46,7 @@ User.all.each do |user|
     receipt.save()
   end
 
-  300.times do
+  80.times do
     item = ReceiptItem.create();
     item.receipt_id = Receipt.all.sample.id
     item.item_type_id = ItemType.all.sample.id
@@ -55,7 +55,7 @@ User.all.each do |user|
     item.save()
   end
 
-  75.times do
+  45.times do
     tax = ReceiptTax.create();
     tax.receipt_id = Receipt.all.sample.id
     tax.tax_type_id = TaxType.all.sample.id
