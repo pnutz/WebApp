@@ -4,12 +4,6 @@ ReceiptItem.delete_all
 
 # add receipts to users
 User.all.each do |user|
-  # add profiles
-  2.times do
-    Profile.create(:name => Faker::Name.name,
-                   :user_id => user.id)
-  end
-
   # add non sub folders
   5.times do
     Folder.create(:name => Faker::Name.name,

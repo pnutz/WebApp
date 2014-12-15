@@ -36,6 +36,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     currency = Currency.where(:code => country_country.currency['code'])[0]
 
     UserSetting.create(user_id: resource.id, currency_id: currency.id, hotkey_receipt: 65, hotkey_vault: 86)
+    # add profiles
+    Profile.create(:name => "Business", :user_id => resource.id)
+    Profile.create(:name => "Personal", :user_id => resource.id)
 
     true
   end
