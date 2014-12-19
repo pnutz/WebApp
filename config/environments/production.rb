@@ -70,7 +70,7 @@ WebApp::Application.configure do
   config.i18n.fallbacks = true
 
   #default url options
-  config.action_mailer.default_url_options = { :host => 'tranquil-sierra-2576.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'tworeceipt.herokuapp.com' }
 
   # development settings for using mailcatcher gem
   config.action_mailer.smtp_settings = {
@@ -78,7 +78,7 @@ WebApp::Application.configure do
     :port           => ENV['MAILGUN_SMTP_PORT'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'tranquil-sierra-2576.herokuapp.com',
+    :domain         => 'tworeceipt.herokuapp.com',
     :authentication => :plain
   }
 
